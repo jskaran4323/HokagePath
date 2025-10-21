@@ -6,6 +6,14 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes';
 // Load environment variables
+import workoutRoutes from './routes/workoutRoutes';
+import mealRoutes from './routes/mealRoutes';
+import postRoutes from './routes/postRoutes';
+import commentRoutes from './routes/commentRoutes';
+import aiRoutes from './routes/aiRoutes';
+import fitnessProfileRoutes from './routes/fitnessProfileRoutes';
+
+
 dotenv.config();
 
 const app: Express = express();
@@ -19,12 +27,19 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', authRoutes);
+app.use('/api/workouts', workoutRoutes);
+app.use('/api/meals', mealRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api/comments', commentRoutes);
+app.use('/api/ai', aiRoutes);
+app.use('/api/fitness-profile', fitnessProfileRoutes);
 
 // Basic test route
 app.get('/', (req: Request, res: Response) => {
   res.json({ message: 'Welcome to HokeagePath API! 🍥' });
 });
-
+console.log('GEMINI_API_KEY:', process.env.GEMINI_API_KEY);
+console.log('All env vars:', Object.keys(process.env).filter(key => key.includes('GEMINI')));
 // Health check route
 app.get('/api/health', (req: Request, res: Response) => {
   res.json({ 
