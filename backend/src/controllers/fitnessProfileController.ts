@@ -2,7 +2,7 @@ import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth';
 import fitnessProfileService, { FitnessProfileServiceError } from '../services/fitnessProfileService';
 import { UpdateFitnessProfileDTO, AddWeightEntryDTO } from '../types/fitnessProfile.dto';
-import { validateUpdateFitnessProfile, validateAddWeightEntry } from '../utils/fitnessprofileValidation';
+import { validateUpdateFitnessProfile, validateAddWeightEntry } from '../utils/fitnessProfileValidation';
 
 export const getFitnessProfile = async (req: AuthRequest, res: Response): Promise<void> => {
   try {

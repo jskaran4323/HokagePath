@@ -9,7 +9,8 @@ import authService, { AuthServiceError } from '../services/authService';
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
     const registerData: RegisterDTO = req.body;
-
+  
+    
     // Validate input
     const validationErrors = validateRegisterInput(registerData);
     if (validationErrors.length > 0) {
@@ -22,12 +23,16 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     }
 
     // Call service to handle business logic
-    const result = await authService.register(registerData);
+    const user = await authService.register(registerData);
+    
+    (req.session as any).userId = user.id;
+    (req.session as any).username = user.username;
+    (req.session as any).email = user.email;
 
     res.status(201).json({
       success: true,
       message: 'User registered successfully',
-      data: result
+      data: user
     });
 
   } catch (error: any) {
@@ -66,13 +71,18 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // Call service to handle business logic
-    const result = await authService.login(loginData);
+    const user = await authService.login(loginData);
+
+    // Create session
+    (req.session as any).userId = user.id;
+    (req.session as any).username = user.username;
+    (req.session as any).email = user.email;
+
 
     res.status(200).json({
       success: true,
       message: 'Login successful',
-      data: result
+      data: {user}
     });
 
   } catch (error: any) {
@@ -95,6 +105,33 @@ export const login = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+
+export const logout = async (req: Request, res: Response): Promise<void> => {
+  try {
+    req.session.destroy((err) => {
+      if (err) {
+        res.status(500).json({
+          success: false,
+          message: 'Error logging out'
+        });
+        return;
+      }
+
+      res.clearCookie('connect.sid');
+      res.status(200).json({
+        success: true,
+        message: 'Logged out successfully'
+      });
+    });
+  } catch (error: any) {
+    console.error('Logout error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error logging out',
+      error: error.message
+    });
+  }
+};
 export const getMe = async (req: any, res: Response): Promise<void> => {
   try {
     const userId = req.user.id;

@@ -4,6 +4,8 @@ import express, { Express, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
 import authRoutes from './routes/authRoutes';
 // Load environment variables
 import workoutRoutes from './routes/workoutRoutes';
@@ -19,13 +21,33 @@ dotenv.config();
 const app: Express = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
+
 app.use(cors({
-    origin: '*',  
-    credentials: true
-  }));
+  origin: 'http://localhost:5173', 
+  credentials: true 
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+secret: process.env.SESSION_SECRET || "",
+resave: false,
+saveUninitialized: false,
+store: MongoStore.create({
+  mongoUrl: process.env.MONGODB_URI,
+  collectionName: 'sessions',
+  ttl: 7*24*60*60
+}),
+cookie: {
+  maxAge: 7*24*60*60*1000,
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax'
+}
+}));
+
+
+
 app.use('/api/auth', authRoutes);
 app.use('/api/workouts', workoutRoutes);
 app.use('/api/meals', mealRoutes);

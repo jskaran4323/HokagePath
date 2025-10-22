@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import authService, { AuthServiceError } from '../services/authService';
 
 export interface AuthRequest extends Request {
   user?: {
@@ -15,34 +14,28 @@ export const authenticate = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const token = req.header('Authorization')?.replace('Bearer ', '');
-
-    if (!token) {
-      res.status(401).json({
+   
+    if (!(req.session as any).userId) {
+      res.status(401).json({ 
         success: false,
-        message: 'No token provided. Authentication required.'
+        message: 'Not authenticated. Please login.' 
       });
       return;
     }
 
-    // Use service to verify token
-    const decoded = authService.verifyToken(token);
-    req.user = decoded;
+    // Attach user to request
+    req.user = {
+      id: (req.session as any).userId,
+      username: (req.session as any).username,
+      email: (req.session as any).email
+    };
+
     next();
-
   } catch (error: any) {
-    if (error instanceof AuthServiceError) {
-      res.status(error.statusCode).json({
-        success: false,
-        message: error.message
-      });
-      return;
-    }
-
-    res.status(500).json({
+    res.status(500).json({ 
       success: false,
       message: 'Authentication failed',
-      error: error.message
+      error: error.message 
     });
   }
 };
