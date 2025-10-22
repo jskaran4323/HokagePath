@@ -40,7 +40,7 @@ public password!: string;
 @prop({ required: true, trim: true })
 public fullName!: string;
 @prop({ default: '' })
-public profilePicture?: string;
+public profilePicture: string;
 
 @prop({ maxlength: 500, default: '' })
 public bio?: string;

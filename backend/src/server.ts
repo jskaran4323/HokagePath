@@ -14,7 +14,7 @@ import postRoutes from './routes/postRoutes';
 import commentRoutes from './routes/commentRoutes';
 import aiRoutes from './routes/aiRoutes';
 import fitnessProfileRoutes from './routes/fitnessProfileRoutes';
-
+import userRoutes from './routes/userRoutes';
 
 dotenv.config();
 
@@ -55,6 +55,7 @@ app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/fitness-profile', fitnessProfileRoutes);
+app.use('/api/users', userRoutes);
 
 // Basic test route
 app.get('/', (req: Request, res: Response) => {
