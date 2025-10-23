@@ -1,26 +1,70 @@
-// backend/src/server.ts
 
+import dotenv from 'dotenv';
+dotenv.config();
 import express, { Express, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import dotenv from 'dotenv';
-
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+import authRoutes from './routes/authRoutes';
 // Load environment variables
+import workoutRoutes from './routes/workoutRoutes';
+import mealRoutes from './routes/mealRoutes';
+import postRoutes from './routes/postRoutes';
+import commentRoutes from './routes/commentRoutes';
+import aiRoutes from './routes/aiRoutes';
+import fitnessProfileRoutes from './routes/fitnessProfileRoutes';
+import userRoutes from './routes/userRoutes';
+import uploadRoutes from './routes/uploadroutes';
+
 dotenv.config();
 
 const app: Express = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.use(cors());
+
+app.use(cors({
+  origin: 'http://localhost:5173', 
+  credentials: true 
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+secret: process.env.SESSION_SECRET || "",
+resave: false,
+saveUninitialized: false,
+store: MongoStore.create({
+  mongoUrl: process.env.MONGODB_URI,
+  collectionName: 'sessions',
+  ttl: 7*24*60*60
+}),
+cookie: {
+  maxAge: 7*24*60*60*1000,
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax'
+}
+}));
+
+
+
+app.use('/api/auth', authRoutes);
+app.use('/api/workouts', workoutRoutes);
+app.use('/api/meals', mealRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api/comments', commentRoutes);
+app.use('/api/ai', aiRoutes);
+app.use('/api/fitness-profile', fitnessProfileRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // Basic test route
 app.get('/', (req: Request, res: Response) => {
   res.json({ message: 'Welcome to HokeagePath API! 🍥' });
 });
-
+console.log('GEMINI_API_KEY:', process.env.GEMINI_API_KEY);
+console.log('All env vars:', Object.keys(process.env).filter(key => key.includes('GEMINI')));
 // Health check route
 app.get('/api/health', (req: Request, res: Response) => {
   res.json({ 
