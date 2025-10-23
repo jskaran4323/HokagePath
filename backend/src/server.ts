@@ -1,9 +1,9 @@
-// backend/src/server.ts
 
+import dotenv from 'dotenv';
+dotenv.config();
 import express, { Express, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import authRoutes from './routes/authRoutes';
@@ -15,6 +15,7 @@ import commentRoutes from './routes/commentRoutes';
 import aiRoutes from './routes/aiRoutes';
 import fitnessProfileRoutes from './routes/fitnessProfileRoutes';
 import userRoutes from './routes/userRoutes';
+import uploadRoutes from './routes/uploadroutes';
 
 dotenv.config();
 
@@ -56,6 +57,7 @@ app.use('/api/comments', commentRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/fitness-profile', fitnessProfileRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // Basic test route
 app.get('/', (req: Request, res: Response) => {

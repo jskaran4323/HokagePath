@@ -22,6 +22,8 @@ export class UserService{
 
         if(data.fullName) user.fullName = data.fullName;
         if(data.profilePicture) user.profilePicture = data.profilePicture;
+        //Profile pictures will be saved in AWS s3 cloud
+
         if (data.bio !== undefined) user.bio = data.bio;
 
         await user.save();
