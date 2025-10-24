@@ -9,7 +9,12 @@ const LoginPage = () => {
   const { login, isLoading, error } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
+    
     e.preventDefault();
+    if (!email.trim() || !password.trim()) {
+      alert('Please enter both email and password.');
+      return;
+    }
     await login(email, password);
   };
 
@@ -37,7 +42,7 @@ const LoginPage = () => {
               onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-              placeholder="naruto@konoha.com"
+              placeholder="email@example.com"
             />
           </div>
 

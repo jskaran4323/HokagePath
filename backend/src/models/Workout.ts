@@ -18,7 +18,7 @@ class Exercise {
   @prop()
   public weight?: number;
 
-  @prop({ enum: ['kg', 'lbs'], default: 'kg' })
+  @prop({ enum: ['kg', 'lbs']})
   public weightUnit?: string;
 
   @prop()
@@ -27,7 +27,7 @@ class Exercise {
   @prop()
   public distance?: number;
 
-  @prop({ enum: ['km', 'miles'], default: 'km' })
+  @prop({ enum: ['km', 'miles'] })
   public distanceUnit?: string;
 
   @prop()

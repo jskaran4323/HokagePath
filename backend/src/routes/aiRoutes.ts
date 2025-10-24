@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.use(authenticate);
 
-router.post('/workout/generate', generateWorkout);
+router.post('/workouts/generate', generateWorkout);
 router.post('/meal/generate', generateMeal);
 
 export default router;

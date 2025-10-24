@@ -138,6 +138,14 @@ WORKOUT REQUIREMENTS:
 - Available Equipment: ${equipment}
 - Focus Area: ${focus}
 
+IMPORTANT RULES:
+1. For bodyweight exercises (push-ups, squats, planks), DO NOT include "weight" or "weightUnit" fields at all
+2. Only include "weight" and "weightUnit" for exercises that actually use weights
+3. Never use "N/A", "Bodyweight", or empty strings for weight/weightUnit
+4. For timed exercises (planks, wall sits), use "duration" in seconds instead of reps
+5. weightUnit must be either "kg" or "lbs" if included
+
+
 Please provide a workout plan in the following JSON format:
 {
   "title": "Workout title",
@@ -220,6 +228,7 @@ Ensure the meal is balanced, nutritious, and aligned with the user's fitness goa
         const parsed = JSON.parse(jsonMatch[0]);
         return parsed;
       }
+      
 
       return {
         title: preferences?.workoutType ? `${preferences.workoutType} Workout` : 'AI Generated Workout',

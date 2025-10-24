@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useNavigate } from 'react-router-dom';
 import { authApi } from '../api/auth.api';
 import { useAuthStore } from '../store/authStore';
+import { useCallback } from 'react';
 
 export const useAuth = () => {
   const navigate = useNavigate();
-  
-  // Get ALL state and actions from store
   const store = useAuthStore();
 
   // Login function
@@ -68,33 +66,45 @@ export const useAuth = () => {
       navigate('/login');
     } catch (err) {
       console.error('Logout error:', err);
+      // Still clear auth state even if API fails
+      store.logout();
+      navigate('/login');
     } finally {
       store.setLoading(false);
     }
   };
 
-  // Fetch user profile
-  const fetchUserProfile = async () => {
+  // ✅ FIXED: Fetch user profile with proper error handling
+  const fetchUserProfile = useCallback(async () => {
     store.setLoading(true);
 
     try {
       const response = await authApi.getMe();
+      
       store.setUser(response.data.data.user);
-      store.setProfile(
-        response.data.data.fitnessProfile, 
-        response.data.data.workoutStats
-      );
+      store.setProfile(response.data.data.fitnessProfile);
+      store.setWorkoutStats(response.data.data.workoutStats);
+      
       return { success: true };
-    } catch (err) {
+    } catch (err: any) {
+      console.error('Failed to fetch profile:', err);
+      
+      store.setUser(null);
+      store.setProfile(null);
+      store.setWorkoutStats(null);
+      
+      if (err.response?.status === 401) {
+        navigate('/login');
+      }
+      
       return { success: false };
     } finally {
       store.setLoading(false);
     }
-  };
-
-  // Return everything from store + custom functions
+  }, [navigate, store]);
+  
   return {
-    // All state from store
+    // State
     user: store.user,
     fitnessProfile: store.fitnessProfile,
     workoutStats: store.workoutStats,

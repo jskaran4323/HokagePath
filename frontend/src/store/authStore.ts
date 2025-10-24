@@ -4,7 +4,6 @@ import { create } from 'zustand';
 import type { User, FitnessProfile, WorkoutStats } from '../types/auth.types';
 
 interface AuthState {
-  // State
   user: User | null;
   fitnessProfile: FitnessProfile | null;
   workoutStats: WorkoutStats | null;
@@ -12,9 +11,9 @@ interface AuthState {
   isLoading: boolean;
   error: string | null;
 
- 
   setUser: (user: User | null) => void;
-  setProfile: (profile: FitnessProfile | null, stats: WorkoutStats | null) => void;
+  setProfile: (profile: FitnessProfile | null) => void;
+  setWorkoutStats: (stats: WorkoutStats | null) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
   logout: () => void;
@@ -22,7 +21,6 @@ interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-  
   user: null,
   fitnessProfile: null,
   workoutStats: null,
@@ -30,15 +28,17 @@ export const useAuthStore = create<AuthState>((set) => ({
   isLoading: false,
   error: null,
 
-
   setUser: (user) => set({ 
     user, 
     isAuthenticated: !!user,
     error: null 
   }),
 
-  setProfile: (fitnessProfile, workoutStats) => set({ 
-    fitnessProfile, 
+  setProfile: (fitnessProfile) => set({ 
+    fitnessProfile 
+  }),
+
+  setWorkoutStats: (workoutStats) => set({
     workoutStats 
   }),
 

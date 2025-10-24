@@ -1,8 +1,11 @@
+// frontend/src/pages/Dashboard/DashBoardPage.tsx
+
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../composables/useAuth';
 
 const DashboardPage = () => {
-  const { user, isLoading } = useAuth();
-  const { workoutStats, fitnessProfile } = useAuth();
+  const navigate = useNavigate();
+  const { user, isLoading, workoutStats, fitnessProfile } = useAuth();
 
   if (isLoading) {
     return <div>Loading dashboard...</div>;
@@ -44,18 +47,24 @@ const DashboardPage = () => {
 
       <div className="bg-white rounded-lg shadow-md p-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <button className="bg-orange-500 text-white py-3 px-4 rounded-lg hover:bg-orange-600 transition">
-            Generate AI Workout
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <button 
+            onClick={() => navigate('/workouts/generate')}
+            className="bg-gradient-to-r from-orange-500 to-red-500 text-white py-4 px-6 rounded-lg hover:from-orange-600 hover:to-red-600 transition font-semibold"
+          >
+            🔥 Generate AI Workout
           </button>
-          <button className="bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition">
-            Log Workout
+          <button 
+            onClick={() => navigate('/workouts')}
+            className="bg-blue-500 text-white py-4 px-6 rounded-lg hover:bg-blue-600 transition font-semibold"
+          >
+            📋 My Workouts
           </button>
-          <button className="bg-green-500 text-white py-3 px-4 rounded-lg hover:bg-green-600 transition">
-            Generate Meal Plan
-          </button>
-          <button className="bg-purple-500 text-white py-3 px-4 rounded-lg hover:bg-purple-600 transition">
-            Create Post
+          <button 
+            onClick={() => navigate('/profile')}
+            className="bg-purple-500 text-white py-4 px-6 rounded-lg hover:bg-purple-600 transition font-semibold"
+          >
+            👤 My Profile
           </button>
         </div>
       </div>
