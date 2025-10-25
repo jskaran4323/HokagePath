@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMeals } from '../../composables/useMeal';
 
+
 const MealDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { currentMeal, isLoading, fetchMeal, updateMeal, deleteMeal } = useMeals();
+  
   const [isEditing, setIsEditing] = useState(false);
   
   const [editData, setEditData] = useState({
@@ -23,8 +25,9 @@ const MealDetail = () => {
 
   const loadMeal = async () => {
     if (!id) return;
-    
+   
     const result = await fetchMeal(id);
+    
     if (!result.success) {
       alert('Failed to load meal');
       navigate('/meals');

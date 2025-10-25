@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate,  Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAuth } from './composables/useAuth';
 import Layout from './components/layout/Layout';
@@ -35,17 +35,20 @@ const NotFoundPage = () => {
 };
 
 const AppContent = () => {
-  const { fetchUserProfile } = useAuth();
-  const location = useLocation();
+  const { fetchUserProfile, isLoading } = useAuth();
+ 
 
   useEffect(() => {
-    
-    if (!['/login', '/register'].includes(location.pathname)) {
-      fetchUserProfile();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
+    fetchUserProfile(); 
+  }, []);
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl font-semibold">Loading...</div>
+      </div>
+    );
+  }
   return (
     <Routes>
       {/* Public routes */}

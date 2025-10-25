@@ -74,13 +74,12 @@ export const useAuth = () => {
     }
   };
 
-  // ✅ FIXED: Fetch user profile with proper error handling
+  
   const fetchUserProfile = useCallback(async () => {
     store.setLoading(true);
-
+  
     try {
-      const response = await authApi.getMe();
-      
+      const response = await authApi.getMe();      
       store.setUser(response.data.data.user);
       store.setProfile(response.data.data.fitnessProfile);
       store.setWorkoutStats(response.data.data.workoutStats);
@@ -93,15 +92,11 @@ export const useAuth = () => {
       store.setProfile(null);
       store.setWorkoutStats(null);
       
-      if (err.response?.status === 401) {
-        navigate('/login');
-      }
-      
       return { success: false };
     } finally {
       store.setLoading(false);
     }
-  }, [navigate, store]);
+  }, [store]); 
   
   return {
     // State
