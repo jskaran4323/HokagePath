@@ -12,6 +12,9 @@ import FitnessProfilePage from './pages/Profile/FitnessProfilePage';
 import GenerateWorkout from './pages/workout/generateWorkout';
 import WorkoutDetail from './pages/workout/workoutDetails';
 import WorkoutList from './pages/workout/workoutList';
+import MealList from './pages/meals/MealList';
+import GenerateMeal from './pages/meals/GenerateMeal';
+import MealDetail from './pages/meals/MealDetails';
 
 // 404 Not Found Page
 const NotFoundPage = () => {
@@ -114,6 +117,36 @@ const AppContent = () => {
             </Layout>
           </ProtectedRoute>
         }
+      />
+      <Route
+       path='/meals'
+       element={
+        <ProtectedRoute>
+          <Layout>
+            <MealList/>
+          </Layout>
+        </ProtectedRoute>
+       }
+      />
+      <Route
+       path='/meals/generate'
+       element={
+        <ProtectedRoute>
+          <Layout>
+            <GenerateMeal/>
+          </Layout>
+        </ProtectedRoute>
+       }
+      />
+      <Route
+       path='/meals/:id'
+       element={
+        <ProtectedRoute>
+          <Layout>
+            <MealDetail/>
+          </Layout>
+        </ProtectedRoute>
+       }
       />
 
       {/* Redirect root to dashboard */}

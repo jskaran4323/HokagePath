@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.use(authenticate);
 
-router.post('/', createMeal);
+router.post('/generate', createMeal);
 router.get('/', getUserMeals);
 router.get('/nutrition/daily', getDailyNutrition);
 router.get('/:id', getMeal);

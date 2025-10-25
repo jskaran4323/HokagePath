@@ -61,10 +61,16 @@ const DashboardPage = () => {
             📋 My Workouts
           </button>
           <button 
-            onClick={() => navigate('/profile')}
+            onClick={() => navigate('/meals/generate')}
             className="bg-purple-500 text-white py-4 px-6 rounded-lg hover:bg-purple-600 transition font-semibold"
           >
-            👤 My Profile
+            Generate AI Meals
+          </button>
+          <button 
+            onClick={() => navigate('/meals')}
+            className="bg-blue-500 text-white py-4 px-6 rounded-lg hover:bg-blue-600 transition font-semibold"
+          >
+            📋 My Meal
           </button>
         </div>
       </div>
