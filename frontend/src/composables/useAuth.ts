@@ -16,7 +16,7 @@ export const useAuth = () => {
     try {
       const response = await authApi.login({ email, password });
       store.setUser(response.data.data.user);
-      navigate('/dashboard');
+      navigate('/feed');
       return { success: true };
     } catch (err: any) {
       const errorMessage = err.response?.data?.message || 'Login failed';

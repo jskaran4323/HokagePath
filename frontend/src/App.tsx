@@ -15,6 +15,8 @@ import WorkoutList from './pages/workout/workoutList';
 import MealList from './pages/meals/MealList';
 import GenerateMeal from './pages/meals/GenerateMeal';
 import MealDetail from './pages/meals/MealDetails';
+import FeedPage from './pages/feed/FeedPage';
+import UserProfilePage from './pages/Profile/UserProfilePage';
 
 // 404 Not Found Page
 const NotFoundPage = () => {
@@ -40,6 +42,7 @@ const AppContent = () => {
 
   useEffect(() => {
     fetchUserProfile(); 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isLoading) {
@@ -79,7 +82,7 @@ const AppContent = () => {
       />
 
       <Route
-        path="/profile"
+        path="/fitness-profile"
         element={
           <ProtectedRoute>
             <Layout>
@@ -151,6 +154,26 @@ const AppContent = () => {
         </ProtectedRoute>
        }
       />
+      <Route
+  path="/feed"
+  element={
+    <ProtectedRoute>
+      <Layout>
+        <FeedPage />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
+< Route
+            path="/profile/:userId"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <UserProfilePage />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
 
       {/* Redirect root to dashboard */}
       <Route path="/" element={<Navigate to="/dashboard" replace />} />

@@ -13,7 +13,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="text-2xl font-bold text-orange-600">
+            <Link to="/feed" className="text-2xl font-bold text-orange-600">
               HokagePath
             </Link>
           </div>
@@ -33,7 +33,7 @@ const Navbar = () => {
                 <Link to="/feed" className="text-gray-700 hover:text-orange-600">
                   Feed
                 </Link>
-                <Link to="/profile" className="flex items-center space-x-2">
+                <Link to={`/profile/${user?.id}`} className="flex items-center space-x-2">
                   {user?.profilePicture ? (
                     <img
                       src={user.profilePicture}
