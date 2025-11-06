@@ -68,17 +68,17 @@ export interface Post{
         apiClient.delete(`/posts${postId}`),
     
       likePost: (postId: string) =>
-        apiClient.post(`/${postId}/like`),
+        apiClient.post(`/posts/${postId}/like`),
     
       unlikePost: (postId: string) =>
-        apiClient.delete(`/${postId}/like`),
+        apiClient.delete(`/posts/${postId}/like`),
     
       // Comments
       getComments: (postId: string) =>
-        apiClient.get(`/comments/post/${postId}`),
+        apiClient.get(`comments/post/${postId}`),
     
       createComment: (postId: string, data: CreateCommentRequest) =>
-        apiClient.post(`/comments/post/${postId}`, data),
+        apiClient.post(`comments/post/${postId}`, data),
     
       deleteComment: (postId: string) =>
         apiClient.delete(`/comments/${postId}`),

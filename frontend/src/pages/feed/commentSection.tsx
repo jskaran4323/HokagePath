@@ -18,13 +18,14 @@ const CommentSection = ({ postId }: CommentSectionProps) => {
 
   useEffect(() => {
     fetchComments();
-  }, [postId]);
+  }, [postId, fetchComments]);
 
+  
   const handleSubmitComment = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+     
     if (!commentText.trim()) return;
-
+  
     const result = await createComment({
       text: commentText,
       parentCommentId: replyToId || undefined,
@@ -47,7 +48,8 @@ const CommentSection = ({ postId }: CommentSectionProps) => {
     }
   };
 
-  const getUserInitials = (name: string) => {
+  const getUserInitials = (name?: string) => {
+    if (!name || !name.trim()) return '??'; 
     return name
       .split(' ')
       .map(n => n[0])
@@ -55,6 +57,7 @@ const CommentSection = ({ postId }: CommentSectionProps) => {
       .toUpperCase()
       .slice(0, 2);
   };
+  
 
   const formatTime = (date: string) => {
     const now = new Date();

@@ -19,6 +19,13 @@ export interface UserProfile {
   createdAt?: string;
 }
 
+export interface audience{
+ id: number,
+ username: string
+ fullName: string,
+ profilePicture: string;
+}
+
 export interface UpdateProfileRequest {
   fullName?: string;
   bio?: string;

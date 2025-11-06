@@ -2,12 +2,13 @@
 // frontend/src/composables/useUser.ts
 
 import { useState } from 'react';
-import { userApi, type UserProfile, type UpdateProfileRequest } from '../api/user.api';
+import { userApi, type UserProfile, type UpdateProfileRequest, type audience } from '../api/user.api';
+
 
 export const useUser = () => {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-  const [followers, setFollowers] = useState<UserProfile[]>([]);
-  const [following, setFollowing] = useState<UserProfile[]>([]);
+  const [followers, setFollowers] = useState<audience[]>([]);
+  const [followings, setFollowings] = useState<audience[]>([]);
   const [searchResults, setSearchResults] = useState<UserProfile[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -116,7 +117,9 @@ export const useUser = () => {
     setError(null);
     try {
       const response = await userApi.getFollowers(userId);
-      const followersList = response.data.data?.followers || response.data.followers || [];
+      console.log(response);
+      
+      const followersList = response.data.data
       setFollowers(followersList);
       return { success: true, followers: followersList };
     } catch (err: any) {
@@ -134,8 +137,8 @@ export const useUser = () => {
     setError(null);
     try {
       const response = await userApi.getFollowing(userId);
-      const followingList = response.data.data?.following || response.data.following || [];
-      setFollowing(followingList);
+      const followingList = response.data.data
+      setFollowings(followingList);
       return { success: true, following: followingList };
     } catch (err: any) {
       const errorMessage = err.response?.data?.message || 'Failed to fetch following';
@@ -173,7 +176,7 @@ export const useUser = () => {
     // State
     userProfile,
     followers,
-    following,
+    followings,
     searchResults,
     isLoading,
     error,

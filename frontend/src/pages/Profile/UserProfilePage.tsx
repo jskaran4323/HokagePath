@@ -11,7 +11,7 @@ const UserProfilePage = () => {
   const { userId } = useParams<{ userId: string }>();
   const navigate = useNavigate();
   const { user: currentUser } = useAuth();
-  const { userProfile, isLoading: userLoading, fetchUserProfile, followUser, unfollowUser } = useUser();
+  const { userProfile, followers, followings, isLoading: userLoading, fetchUserProfile, fetchFollowers,fetchFollowing, followUser, unfollowUser } = useUser();
   const { posts, isLoading: postsLoading, fetchUserPosts } = useFeed();
 
   const [activeTab, setActiveTab] = useState<'posts' | 'followers' | 'following'>('posts');
@@ -24,6 +24,8 @@ const UserProfilePage = () => {
     if (userId) {
       fetchUserProfile(userId);
       fetchUserPosts(userId);
+      fetchFollowers(userId);
+      fetchFollowing(userId);
     }
   }, [userId]);
 
@@ -35,7 +37,7 @@ const UserProfilePage = () => {
 
   const handleFollow = async () => {
     if (!userId) return;
-
+    
     if (isFollowing) {
       const result = await unfollowUser(userId);
       if (result.success) setIsFollowing(false);
@@ -226,16 +228,88 @@ const UserProfilePage = () => {
             </div>
           )}
 
-          {activeTab === 'followers' && (
-            <div className="text-center py-12">
-              <p className="text-gray-600">Followers list coming soon...</p>
+{activeTab === 'followers' && (
+  <div className="space-y-3 p-4">
+    {followers.length > 0 ? (
+      followers.map((follower) => (
+        <div
+          key={follower.id}
+          className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors"
+        >
+          <div className="flex items-center gap-3">
+            {/* Profile Picture */}
+            <img
+              src={follower.profilePicture}
+              alt={follower.fullName}
+              className="w-12 h-12 rounded-full object-cover"
+            />
+            
+            {/* User Info */}
+            <div className="flex flex-col">
+              <span className="font-semibold text-gray-900">
+                {follower.fullName}
+              </span>
+              <span className="text-sm text-gray-500">
+                @{follower.username}
+              </span>
             </div>
-          )}
-
+          </div>
+          
+          {/* Optional: Action Button */}
+          <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+            View Profile
+          </button>
+        </div>
+      ))
+    ) : (
+      <div className="text-center py-12">
+        <p className="text-gray-600">No followers yet</p>
+      </div>
+    )}
+  </div>
+)}
           {activeTab === 'following' && (
-            <div className="text-center py-12">
-              <p className="text-gray-600">Following list coming soon...</p>
-            </div>
+            // <div className="text-center py-12">
+            //   <p className="text-gray-600">{following.map((x)=> x.username)}</p>
+            // </div>
+            <div className="space-y-3 p-4">
+            {followings.length > 0 ? (
+              followings.map((following ) => (
+                <div
+                  key={following.id}
+                  className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    {/* Profile Picture */}
+                    <img
+                      src={following.profilePicture}
+                      alt={following.fullName}
+                      className="w-12 h-12 rounded-full object-cover"
+                    />
+                    
+                    {/* User Info */}
+                    <div className="flex flex-col">
+                      <span className="font-semibold text-gray-900">
+                        {following.fullName}
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        @{following.username}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* Optional: Action Button */}
+                  <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                    View Profile
+                  </button>
+                </div>
+              ))
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-gray-600">No followers yet</p>
+              </div>
+            )}
+          </div>
           )}
         </div>
       </div>
