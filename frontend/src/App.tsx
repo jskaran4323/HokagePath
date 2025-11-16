@@ -39,11 +39,11 @@ const NotFoundPage = () => {
 const AppContent = () => {
   const { fetchUserProfile, isLoading } = useAuth();
  
+  
+   useEffect(() => {
 
-  useEffect(() => {
-    fetchUserProfile(); 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    fetchUserProfile();
+  }, [fetchUserProfile]);
 
   if (isLoading) {
     return (

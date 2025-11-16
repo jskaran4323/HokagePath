@@ -66,4 +66,12 @@ export const userApi = {
   // Search users
   searchUsers: (query: string) =>
     apiClient.get(`/users/search?q=${query}`),
+  
+  uploadProfileImage: (file: FormData) =>{
+    return apiClient.post(`upload/profile-picture`, file, {headers: {
+      'Content-Type': 'multipart/form-data', 
+    },})
+  }
+
+
 };

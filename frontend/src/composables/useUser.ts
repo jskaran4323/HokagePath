@@ -172,6 +172,26 @@ export const useUser = () => {
     }
   };
 
+  const uploadProfilePicture  = async (file: File) =>{
+    const formData = new FormData();
+    formData.append('profilePicture', file);
+
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response =  await userApi.uploadProfileImage(formData);
+      console.log(response);
+      
+      return {success: true};
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.message  || "Failed to upload"
+      setError(errorMessage)
+      return { success: false, error: errorMessage };
+    }finally {
+      setIsLoading(false);
+    }
+  }
+
   return {
     // State
     userProfile,
@@ -190,6 +210,7 @@ export const useUser = () => {
     fetchFollowers,
     fetchFollowing,
     searchUsers,
+    uploadProfilePicture,
 
     // Setters
     clearError: () => setError(null),

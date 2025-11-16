@@ -2,7 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 import { authApi } from '../api/auth.api';
 import { useAuthStore } from '../store/authStore';
-import { useCallback } from 'react';
+import { useCallback} from 'react';
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -76,15 +76,19 @@ export const useAuth = () => {
 
   
   const fetchUserProfile = useCallback(async () => {
+    if (store.hasFetched) return;
     store.setLoading(true);
-  
+    
     try {
-      const response = await authApi.getMe();      
+      const response = await authApi.getMe();
+          
       store.setUser(response.data.data.user);
+      
+      
       store.setProfile(response.data.data.fitnessProfile);
       store.setWorkoutStats(response.data.data.workoutStats);
       
-      return { success: true };
+      return response;
     } catch (err: any) {
       console.error('Failed to fetch profile:', err);
       
@@ -95,6 +99,7 @@ export const useAuth = () => {
       return { success: false };
     } finally {
       store.setLoading(false);
+      store.setHasFetched(true); 
     }
   }, [store]); 
   

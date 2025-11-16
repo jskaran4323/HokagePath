@@ -16,11 +16,11 @@ export class PostService {
 
   private async toPostResponse(post: any, currentUserId?: string): Promise<PostResponseDTO> {
     const author = await UserModel.findById(post.author);
-
+    
     return {
       id: post._id.toString(),
       author: {
-        id: author!._id.toString(),
+        id: author!._id.toString() ,
         username: author!.username,
         fullName: author!.fullName,
         profilePicture: author!.profilePicture

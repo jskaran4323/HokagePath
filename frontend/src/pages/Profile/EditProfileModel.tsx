@@ -9,6 +9,8 @@ interface EditProfileModalProps {
   onSuccess?: () => void;
 }
 
+
+
 const EditProfileModal = ({ isOpen, onClose, currentProfile, onSuccess }: EditProfileModalProps) => {
   const { updateProfile, isLoading } = useUser();
   
@@ -24,6 +26,8 @@ const EditProfileModal = ({ isOpen, onClose, currentProfile, onSuccess }: EditPr
     e.preventDefault();
     
     const result = await updateProfile(formData);
+    console.log(result);
+    
     
     if (result.success) {
       if (onSuccess) onSuccess();
@@ -31,6 +35,8 @@ const EditProfileModal = ({ isOpen, onClose, currentProfile, onSuccess }: EditPr
       alert(result.error || 'Failed to update profile');
     }
   };
+
+
 
   if (!isOpen) return null;
 
@@ -108,14 +114,14 @@ const EditProfileModal = ({ isOpen, onClose, currentProfile, onSuccess }: EditPr
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
-
+           
             {/* Profile Picture URL */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Profile Picture URL
+                Profile picture
               </label>
               <input
-                type="url"
+                type="text"
                 value={formData.profilePicture}
                 onChange={(e) => setFormData({ ...formData, profilePicture: e.target.value })}
                 placeholder="https://example.com/profile.jpg"

@@ -11,7 +11,7 @@ const UserProfilePage = () => {
   const { userId } = useParams<{ userId: string }>();
   const navigate = useNavigate();
   const { user: currentUser } = useAuth();
-  const { userProfile, followers, followings, isLoading: userLoading, fetchUserProfile, fetchFollowers,fetchFollowing, followUser, unfollowUser } = useUser();
+  const { userProfile, followers, followings, isLoading: userLoading, fetchUserProfile, uploadProfilePicture,fetchFollowers,fetchFollowing, followUser, unfollowUser } = useUser();
   const { posts, isLoading: postsLoading, fetchUserPosts } = useFeed();
 
   const [activeTab, setActiveTab] = useState<'posts' | 'followers' | 'following'>('posts');
@@ -47,6 +47,34 @@ const UserProfilePage = () => {
     }
   };
 
+  const [file, setFile] = useState<File | null>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile); 
+    }
+  };
+
+  const handleUpload = async () => {
+    if (!file || !userId) return;
+  
+    try {
+      const result = await uploadProfilePicture(file); 
+      if (result.success) {
+       
+        fetchUserProfile(userId);
+        setFile(null); 
+      }
+    } catch (err) {
+      console.error("Upload failed:", err);
+    }
+  };
+  
+  
+  
+  
+
   const getUserInitials = (name: string) =>
     name
       ?.split(' ')
@@ -79,6 +107,8 @@ const UserProfilePage = () => {
     );
   }
 
+
+
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
       {/* Profile Header */}
@@ -90,18 +120,29 @@ const UserProfilePage = () => {
         <div className="px-6 pb-6">
           <div className="flex flex-col md:flex-row items-center md:items-end gap-6 -mt-16 md:-mt-20">
             {/* Profile Picture */}
+            <div>
+      <input type="file" onChange={handleFileChange} />
+      <button onClick={handleUpload}>Upload</button>
+    </div>
+    
             <div className="relative">
+            
+     
               {userProfile.profilePicture ? (
+                
+                
                 <img
                   src={userProfile.profilePicture}
                   alt={userProfile.fullName}
                   className="w-32 h-32 rounded-full border-4 border-white object-cover shadow-lg"
                 />
+                
               ) : (
                 <div className="w-32 h-32 rounded-full border-4 border-white bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white text-4xl font-bold shadow-lg">
                   {getUserInitials(userProfile.fullName)}
                 </div>
               )}
+             
             </div>
 
             {/* User Details */}
@@ -130,7 +171,13 @@ const UserProfilePage = () => {
                 </span>
               </div>
             </div>
-
+            <button
+            onClick={()=> navigate('/fitness-profile')}
+                  
+                  className="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition font-semibold"
+                >
+                  Fitness Profile
+                </button>
             {/* Action Buttons */}
             <div className="flex gap-3">
               {isOwnProfile ? (
@@ -140,6 +187,7 @@ const UserProfilePage = () => {
                 >
                   Edit Profile
                 </button>
+                
               ) : (
                 <button
                   onClick={handleFollow}
@@ -256,7 +304,9 @@ const UserProfilePage = () => {
           </div>
           
           {/* Optional: Action Button */}
-          <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+          <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+           onClick={() =>navigate(`/profile/${follower.id}`)} 
+          >
             View Profile
           </button>
         </div>
@@ -299,7 +349,9 @@ const UserProfilePage = () => {
                   </div>
                   
                   {/* Optional: Action Button */}
-                  <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                  <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                  onClick={() =>navigate(`/profile/${following.id}`)} 
+                  >
                     View Profile
                   </button>
                 </div>
