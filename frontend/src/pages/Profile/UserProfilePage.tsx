@@ -11,7 +11,7 @@ const UserProfilePage = () => {
   const { userId } = useParams<{ userId: string }>();
   const navigate = useNavigate();
   const { user: currentUser } = useAuth();
-  const { userProfile, followers, followings, isLoading: userLoading, fetchUserProfile, uploadProfilePicture,fetchFollowers,fetchFollowing, followUser, unfollowUser } = useUser();
+  const { userProfile, followers, followings, isLoading: userLoading, fetchUserProfile, fetchFollowers,fetchFollowing, followUser, unfollowUser } = useUser();
   const { posts, isLoading: postsLoading, fetchUserPosts } = useFeed();
 
   const [activeTab, setActiveTab] = useState<'posts' | 'followers' | 'following'>('posts');
@@ -47,32 +47,6 @@ const UserProfilePage = () => {
     }
   };
 
-  const [file, setFile] = useState<File | null>(null);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
-    if (selectedFile) {
-      setFile(selectedFile); 
-    }
-  };
-
-  const handleUpload = async () => {
-    if (!file || !userId) return;
-  
-    try {
-      const result = await uploadProfilePicture(file); 
-      if (result.success) {
-       
-        fetchUserProfile(userId);
-        setFile(null); 
-      }
-    } catch (err) {
-      console.error("Upload failed:", err);
-    }
-  };
-  
-  
-  
   
 
   const getUserInitials = (name: string) =>
@@ -119,11 +93,8 @@ const UserProfilePage = () => {
         {/* Profile Info */}
         <div className="px-6 pb-6">
           <div className="flex flex-col md:flex-row items-center md:items-end gap-6 -mt-16 md:-mt-20">
-            {/* Profile Picture */}
-            <div>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload</button>
-    </div>
+         
+           
     
             <div className="relative">
             

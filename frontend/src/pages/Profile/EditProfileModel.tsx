@@ -12,7 +12,7 @@ interface EditProfileModalProps {
 
 
 const EditProfileModal = ({ isOpen, onClose, currentProfile, onSuccess }: EditProfileModalProps) => {
-  const { updateProfile, isLoading } = useUser();
+  const { updateProfile, isLoading, uploadProfilePicture } = useUser();
   
   const [formData, setFormData] = useState<UpdateProfileRequest>({
     fullName: currentProfile.fullName,
@@ -26,6 +26,9 @@ const EditProfileModal = ({ isOpen, onClose, currentProfile, onSuccess }: EditPr
     e.preventDefault();
     
     const result = await updateProfile(formData);
+    const upload = await handleUpload();
+    console.log(upload);
+    
     console.log(result);
     
     
@@ -33,6 +36,24 @@ const EditProfileModal = ({ isOpen, onClose, currentProfile, onSuccess }: EditPr
       if (onSuccess) onSuccess();
     } else {
       alert(result.error || 'Failed to update profile');
+    }
+  };
+
+  const [file, setFile] = useState<File | null>(null);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile); 
+    }
+  };
+  const handleUpload = async () => {
+    if (!file) return;
+  
+    try {
+       await uploadProfilePicture(file); 
+       return {success: true}
+    } catch (err) {
+      console.error("Upload failed:", err);
     }
   };
 
@@ -121,9 +142,8 @@ const EditProfileModal = ({ isOpen, onClose, currentProfile, onSuccess }: EditPr
                 Profile picture
               </label>
               <input
-                type="text"
-                value={formData.profilePicture}
-                onChange={(e) => setFormData({ ...formData, profilePicture: e.target.value })}
+                type="file"
+                onChange={handleFileChange}
                 placeholder="https://example.com/profile.jpg"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
@@ -166,3 +186,4 @@ const EditProfileModal = ({ isOpen, onClose, currentProfile, onSuccess }: EditPr
 };
 
 export default EditProfileModal;
+

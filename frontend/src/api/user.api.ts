@@ -45,7 +45,7 @@ export const userApi = {
 
   // Update profile
   updateProfile: (data: UpdateProfileRequest) =>
-    apiClient.put('/users/me', data),
+    apiClient.put('users/profile', data),
 
   // Follow user
   followUser: (userId: string) =>
