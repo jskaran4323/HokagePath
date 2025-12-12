@@ -19,9 +19,7 @@ const FeedPage = () => {
     fetchFeed(1, false);
   };
 
-  const getUserInitials = (name: string) => {
-   
-    
+  const getUserInitials = (name: string) => { 
     return name
       ?.split(' ')
       .map(n => n[0])

@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import type { User, FitnessProfile, WorkoutStats } from '../types/auth.types';
 
 interface AuthState {
@@ -14,61 +15,59 @@ interface AuthState {
   setProfile: (profile: FitnessProfile | null) => void;
   setWorkoutStats: (stats: WorkoutStats | null) => void;
   setLoading: (loading: boolean) => void;
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
   setHasFetched: (f: boolean) => void;
   setError: (error: string | null) => void;
   logout: () => void;
   reset: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  // Initial state
-  user: null,
-  fitnessProfile: null,
-  workoutStats: null,
-  isAuthenticated: false,
-  hasFetched: false,   // ✅ initialize
-  isLoading: false,    // set to false initially
-  error: null,
-
-  // Set user + update auth status
-  setUser: (user) =>
-    set({
-      user,
-      isAuthenticated: !!user,
-      error: null,
-    }),
-
-  // Set profile data
-  setProfile: (fitnessProfile) => set({ fitnessProfile }),
-
-  // Set workout stats
-  setWorkoutStats: (workoutStats) => set({ workoutStats }),
-
-  // Update loading status
-  setLoading: (isLoading) => set({ isLoading }),
-
-  // Update hasFetched flag
-  setHasFetched: (hasFetched) => set({ hasFetched }),
-
-  // Update error message
-  setError: (error) => set({ error }),
-
-  // Logout and clear everything (including hasFetched)
-  logout: () =>
-    set({
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      // Initial state
       user: null,
       fitnessProfile: null,
       workoutStats: null,
       isAuthenticated: false,
-      hasFetched: false,   // ✅ reset hasFetched
-      isLoading: false,
+      hasFetched: false,  
+      isLoading: false,   
       error: null,
-    }),
 
-  // Reset only error/loading (for UI)
-  reset: () =>
-    set({
-      error: null,
-      isLoading: false,
+      setUser: (user) => set({ user }),
+      setProfile: (fitnessProfile) => set({ fitnessProfile }),
+      setWorkoutStats: (workoutStats) => set({ workoutStats }),
+      setLoading: (isLoading) => set({ isLoading }),
+      setHasFetched: (hasFetched) => set({ hasFetched }),
+      setIsAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
+      setError: (error) => set({ error }),
+
+      logout: () =>
+        set({
+          user: null,
+          fitnessProfile: null,
+          workoutStats: null,
+          isAuthenticated: false,
+          hasFetched: false,
+          isLoading: false,
+          error: null,
+        }),
+
+      reset: () =>
+        set({
+          error: null,
+          isLoading: false,
+        }),
     }),
-}));
+    {
+      name: 'auth-storage', // localStorage key
+      storage: createJSONStorage(() => localStorage),
+      // Only persist these fields (exclude loading/error states)
+      partialize: (state) => ({
+    
+        isAuthenticated: state.isAuthenticated,
+    
+      }),
+    }
+  )
+);

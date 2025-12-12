@@ -23,10 +23,9 @@ const GenerateWorkout = () => {
 
     try {
       const response = await workoutApi.generateWorkout(formData);
-      console.log(response);
       
       const workoutId = response.data.data._id;
-      console.log(workoutId);
+   
       
      
       navigate(`/workouts/${workoutId}`);

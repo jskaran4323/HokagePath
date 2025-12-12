@@ -19,6 +19,8 @@ export const useFeed = () => {
     try {
       const response = await feedApi.getFeed(pageNum, 10);
        const newPosts = response.data.data;
+       console.log(newPosts);
+       
       if (append) {
         setPosts(prev => [...prev, ...newPosts]);
       } else {
@@ -83,10 +85,12 @@ export const useFeed = () => {
   };
 
   // Create post
-  const createPost = async (data: CreatePostRequest) => {
+  const createPost = async (data: CreatePostRequest | FormData) => {
     setIsLoading(true);
     setError(null);
     try {
+      console.log(data);
+      
       const response = await feedApi.createPost(data);
       const post = response.data.data
       setPosts(prev => [post, ...prev]);
@@ -167,6 +171,28 @@ export const useFeed = () => {
     }
   };
 
+  const uploadPostPictures  = async (file: File) =>{
+      const formData = new FormData();
+      formData.append('images', file);
+  
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response =  await feedApi.uploadPostImages(formData);
+        console.log(response);
+        
+        return {success: true};
+      } catch (err: any) {
+        const errorMessage = err.response?.data?.message  || "Failed to upload"
+        setError(errorMessage)
+        return { success: false, error: errorMessage };
+      }finally {
+        setIsLoading(false);
+      }
+    }
+  
+
+
   return {
     // State
     posts,
@@ -185,6 +211,7 @@ export const useFeed = () => {
     deletePost,
     likePost,
     unlikePost,
+    uploadPostPictures,
 
     // Setters
     setCurrentPost,

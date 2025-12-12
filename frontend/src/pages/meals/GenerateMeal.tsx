@@ -20,7 +20,7 @@ const GenerateMeal = () => {
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
+    
     
     const result = await generateMeal(formData);
     

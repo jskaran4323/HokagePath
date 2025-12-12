@@ -18,7 +18,7 @@ const WorkoutList = () => {
     setIsLoading(true);
     try {
       const response = await workoutApi.getWorkouts(filter === 'all' ? undefined : filter);
-      console.log(response.data);
+    
       
       setWorkouts(response.data.data);
 

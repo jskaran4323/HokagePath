@@ -38,11 +38,11 @@ export interface Post{
     }
 
     export interface CreatePostRequest {
-        caption?: string;
-        imageUrls?: string[];
-        tags?: string[];
-        location?: string;
-        visibility?: 'public' | 'followers' | 'private';
+        caption: string;
+        imageUrls: File[];
+        tags: string[];
+        location: string;
+        visibility: 'public' | 'followers' | 'private';
       }
       
       export interface CreateCommentRequest {
@@ -61,9 +61,12 @@ export interface Post{
        getPost: (postId: string) =>
          apiClient.get(`/posts/${postId}`),
     
-      createPost: (data: CreatePostRequest) =>
-        apiClient.post('/posts', data),
-    
+       createPost: (data: CreatePostRequest | FormData) =>
+        apiClient.post('/posts', data, 
+          data instanceof FormData ? { headers: { 'Content-Type': 'multipart/form-data' } } : {}
+        )
+        ,
+        
       deletePost: (postId: string) =>
         apiClient.delete(`/posts${postId}`),
     
@@ -83,6 +86,11 @@ export interface Post{
       deleteComment: (postId: string) =>
         apiClient.delete(`/comments/${postId}`),
 
-
-       
+      uploadPostImages: (file: FormData) =>{
+        return apiClient.post(`upload/post-images`, file, {headers: {
+          'Content-Type': 'multipart/form-data', 
+        },})
+      }
+    
+        
    }      

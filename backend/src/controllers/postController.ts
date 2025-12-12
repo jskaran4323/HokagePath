@@ -7,8 +7,19 @@ import { validateCreatePost, validateUpdatePost } from '../utils/postValidation'
 export const createPost = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
-    const postData: CreatePostDTO = req.body;
-
+    console.log(req.files);
+    
+    const files = req.files as Express.MulterS3.File[];
+    const imageUrls = files?.length ? files.map(f => f.location) : [];
+    const postData: CreatePostDTO = {
+      caption: req.body.caption,
+      visibility: req.body.visibility,
+      location: req.body.location,
+      workoutRef: req.body.workoutRef,
+     
+      tags: req.body.tags ? JSON.parse(req.body.tags) : [],
+      imageUrls 
+    };
     const validationErrors = validateCreatePost(postData);
     if (validationErrors.length > 0) {
       res.status(400).json({
@@ -18,7 +29,7 @@ export const createPost = async (req: AuthRequest, res: Response): Promise<void>
       });
       return;
     }
-
+    
     const post = await postService.createPost(userId, postData);
 
     res.status(201).json({

@@ -14,55 +14,75 @@ interface CreatePostModalProps {
 const CreatePostModal = ({ isOpen, onClose, onSuccess }: CreatePostModalProps) => {
   const { createPost, isLoading } = useFeed();
   
-  
   const [formData, setFormData] = useState<CreatePostRequest>({
     caption: '',
-    imageUrls: [], // This should match CreatePostRequest type
+    imageUrls: [],
     tags: [],
     location: '',
     visibility: 'public',
   });
-  const [imageInput, setImageInput] = useState('');
+  
+  const [files, setFiles] = useState<File[]>([]);
   const [tagInput, setTagInput] = useState('');
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = e.target.files;
+    if (selectedFiles) {
+      setFiles(prev => [...prev, ...Array.from(selectedFiles)]);
+    }
+  };
+
+  const removeFile = (index: number) => {
+    setFiles(files.filter((_, i) => i !== index));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    const result = await createPost(formData);
-    
-    if (result.success) {
-      // Reset form
-      setFormData({
-        caption: '',
-        imageUrls: [],
-        tags: [],
-        location: '',
-        visibility: 'public',
+    try {
+      // Create FormData to send files + other data together
+      
+      console.log(formData);
+      
+      
+      const formDataToSend = new FormData();
+      
+      // Append text fields
+      formDataToSend.append('caption', formData.caption || '');
+      formDataToSend.append('location', formData.location || '');
+      formDataToSend.append('visibility', formData.visibility || "public");
+      
+      // Append tags as array
+      formDataToSend.append('tags', JSON.stringify(formData.tags || []));
+      
+      
+      // Append image files
+      files.forEach(file => {
+        formDataToSend.append('imagesUrls', file);
       });
-      setImageInput('');
-      setTagInput('');
-      onClose();
-      if (onSuccess) onSuccess();
-    } else {
-      alert(result.error || 'Failed to create post');
+      // Send everything in one call
+      const result = await createPost(formDataToSend);
+      
+      if (result.success) {
+        // Reset form
+        setFormData({
+          caption: '',
+          imageUrls: [],
+          tags: [],
+          location: '',
+          visibility: 'public',
+        });
+        setFiles([]);
+        setTagInput('');
+        onClose();
+        if (onSuccess) onSuccess();
+      } else {
+        alert(result.error || 'Failed to create post');
+      }
+    } catch (error) {
+      console.error("Post creation failed:", error);
+      alert('Failed to create post');
     }
-  };
-
-  const addImage = () => {
-    if (imageInput.trim() && !formData.imageUrls?.includes(imageInput.trim())) {
-      setFormData({
-        ...formData,
-        imageUrls: [...(formData.imageUrls || []), imageInput.trim()]
-      });
-      setImageInput('');
-    }
-  };
-
-  const removeImage = (url: string) => {
-    setFormData({
-      ...formData,
-      imageUrls: formData.imageUrls?.filter(u => u !== url) || []
-    });
   };
 
   const addTag = () => {
@@ -113,48 +133,32 @@ const CreatePostModal = ({ isOpen, onClose, onSuccess }: CreatePostModalProps) =
               />
             </div>
 
-            {/* Image URLs */}
+            {/* Image Upload */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Image URLs
+                Upload Images
               </label>
-              <div className="flex gap-2 mb-2">
-                <input
-                  type="url"
-                  value={imageInput}
-                  onChange={(e) => setImageInput(e.target.value)}
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault();
-                      addImage();
-                    }
-                  }}
-                  placeholder="https://example.com/image.jpg"
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                <button
-                  type="button"
-                  onClick={addImage}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-                >
-                  Add
-                </button>
-              </div>
-              {formData.imageUrls && formData.imageUrls.length > 0 && (
+              <input
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={handleFileChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+              
+              {/* Preview uploaded files */}
+              {files.length > 0 && (
                 <div className="grid grid-cols-2 gap-2 mt-3">
-                  {formData.imageUrls.map((url, index) => (
+                  {files.map((file, index) => (
                     <div key={index} className="relative">
                       <img
-                        src={url}
+                        src={URL.createObjectURL(file)}
                         alt={`Preview ${index + 1}`}
                         className="w-full h-32 object-cover rounded-lg"
-                        onError={(e) => {
-                          e.currentTarget.src = 'https://via.placeholder.com/200x150?text=Invalid+Image';
-                        }}
                       />
                       <button
                         type="button"
-                        onClick={() => removeImage(url)}
+                        onClick={() => removeFile(index)}
                         className="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 hover:bg-red-700"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -26,11 +26,8 @@ const EditProfileModal = ({ isOpen, onClose, currentProfile, onSuccess }: EditPr
     e.preventDefault();
     
     const result = await updateProfile(formData);
-    const upload = await handleUpload();
-    console.log(upload);
-    
-    console.log(result);
-    
+    await handleUpload();
+   
     
     if (result.success) {
       if (onSuccess) onSuccess();

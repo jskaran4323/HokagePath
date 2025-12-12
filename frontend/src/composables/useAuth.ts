@@ -2,28 +2,34 @@
 import { useNavigate } from 'react-router-dom';
 import { authApi } from '../api/auth.api';
 import { useAuthStore } from '../store/authStore';
-import { useCallback} from 'react';
+
+
 
 export const useAuth = () => {
   const navigate = useNavigate();
-  const store = useAuthStore();
+  const {user, fitnessProfile, workoutStats, isAuthenticated, error, setUser, setIsAuthenticated, isLoading, reset, setHasFetched, setError, setLoading, hasFetched ,setProfile, setWorkoutStats} = useAuthStore();
 
   // Login function
   const login = async (email: string, password: string) => {
-    store.reset();
-    store.setLoading(true);
+    reset();
+    setLoading(true);
 
     try {
       const response = await authApi.login({ email, password });
-      store.setUser(response.data.data.user);
+      setUser(response.data.data.user);
+      setIsAuthenticated(true)
+      
+      
+      
+     
       navigate('/feed');
       return { success: true };
     } catch (err: any) {
       const errorMessage = err.response?.data?.message || 'Login failed';
-      store.setError(errorMessage);
+      setError(errorMessage);
       return { success: false, error: errorMessage };
     } finally {
-      store.setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -34,8 +40,8 @@ export const useAuth = () => {
     password: string,
     fullName: string
   ) => {
-    store.reset();
-    store.setLoading(true);
+    reset();
+    setLoading(true);
 
     try {
       const response = await authApi.register({ 
@@ -44,79 +50,80 @@ export const useAuth = () => {
         password, 
         fullName 
       });
-      store.setUser(response.data.data.user);
+      setUser(response.data.data.user);
       navigate('/dashboard');
       return { success: true };
     } catch (err: any) {
       const errorMessage = err.response?.data?.message || 'Registration failed';
-      store.setError(errorMessage);
+      setError(errorMessage);
       return { success: false, error: errorMessage };
     } finally {
-      store.setLoading(false);
+      setLoading(false);
     }
   };
 
   // Logout function
   const logout = async () => {
-    store.setLoading(true);
+    setLoading(true);
 
     try {
       await authApi.logout();
-      store.logout();
       navigate('/login');
     } catch (err) {
       console.error('Logout error:', err);
-      // Still clear auth state even if API fails
-      store.logout();
       navigate('/login');
     } finally {
-      store.setLoading(false);
+      setLoading(false);
     }
   };
 
   
-  const fetchUserProfile = useCallback(async () => {
-    if (store.hasFetched) return;
-    store.setLoading(true);
-    
+  const fetchUserProfile = async () => {
+    if (hasFetched) return;
+  
+    setLoading(true);
+  
     try {
       const response = await authApi.getMe();
-          
-      store.setUser(response.data.data.user);
+      console.log(response);
       
-      
-      store.setProfile(response.data.data.fitnessProfile);
-      store.setWorkoutStats(response.data.data.workoutStats);
-      
+      setUser(response.data.data.user);
+      setProfile(response.data.data.fitnessProfile);
+      setWorkoutStats(response.data.data.workoutStats);
+      setIsAuthenticated(true);
+  
       return response;
     } catch (err: any) {
-      console.error('Failed to fetch profile:', err);
-      
-      store.setUser(null);
-      store.setProfile(null);
-      store.setWorkoutStats(null);
-      
+      console.error("Failed to fetch profile:", err);
+  
+      setUser(null);
+      setProfile(null);
+      setWorkoutStats(null);
+  
       return { success: false };
     } finally {
-      store.setLoading(false);
-      store.setHasFetched(true); 
+      setLoading(false);
+      setHasFetched(true);
     }
-  }, [store]); 
+  };
+  
   
   return {
     // State
-    user: store.user,
-    fitnessProfile: store.fitnessProfile,
-    workoutStats: store.workoutStats,
-    isAuthenticated: store.isAuthenticated,
-    isLoading: store.isLoading,
-    error: store.error,
+    user: user,
+    fitnessProfile: fitnessProfile,
+    workoutStats: workoutStats,
+    isAuthenticated: isAuthenticated,
+    isLoading: isLoading,
+    error: error,
 
     // Functions
     login,
     register,
     logout,
     fetchUserProfile,
-    clearError: () => store.setError(null),
+    clearError: () => setError(null),
   };
 };
+
+

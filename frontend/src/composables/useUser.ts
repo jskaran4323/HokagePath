@@ -179,8 +179,8 @@ export const useUser = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response =  await userApi.uploadProfileImage(formData);
-      console.log(response);
+       await userApi.uploadProfileImage(formData);
+     
       
       return {success: true};
     } catch (err: any) {

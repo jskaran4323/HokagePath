@@ -2,7 +2,8 @@ import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth';
 import userService from '../services/userService';
 import uploadService from '../services/uploadService';
-
+import postService from '../services/postService';
+import { CreatePostDTO } from '../types/post.dto';
 export const uploadProfilePicture = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
@@ -46,6 +47,7 @@ export const uploadProfilePicture = async (req: AuthRequest, res: Response): Pro
 export const uploadPostImages = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const files = req.files as Express.MulterS3.File[];
+    
 
     if (!files || files.length === 0) {
       res.status(400).json({
@@ -56,8 +58,20 @@ export const uploadPostImages = async (req: AuthRequest, res: Response): Promise
     }
 
     // Get all image URLs
-    const imageUrls = files.map(file => file.location);
+    const imageUrls: string[] = files.map(file => file.location);
+    const postData: CreatePostDTO = {
+      caption: req.body.caption,
+      imageUrls,
+      workoutRef: req.body.workoutRef,
+      tags: req.body.tags ? JSON.parse(req.body.tags) : [],
+      visibility: req.body.visibility,
+      location: req.body.location
+    };
 
+    // Call your existing createPost method
+    const post = await postService.createPost(req.user!.id, postData);
+    console.log(post);
+    
     res.status(200).json({
       success: true,
       message: 'Images uploaded successfully',
