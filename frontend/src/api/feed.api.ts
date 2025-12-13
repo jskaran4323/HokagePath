@@ -39,7 +39,7 @@ export interface Post{
 
     export interface CreatePostRequest {
         caption: string;
-        imageUrls: File[];
+        imageUrls: string[];
         tags: string[];
         location: string;
         visibility: 'public' | 'followers' | 'private';
@@ -87,6 +87,8 @@ export interface Post{
         apiClient.delete(`/comments/${postId}`),
 
       uploadPostImages: (file: FormData) =>{
+        console.log(file);
+        
         return apiClient.post(`upload/post-images`, file, {headers: {
           'Content-Type': 'multipart/form-data', 
         },})

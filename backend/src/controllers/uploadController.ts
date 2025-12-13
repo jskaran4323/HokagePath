@@ -8,7 +8,8 @@ export const uploadProfilePicture = async (req: AuthRequest, res: Response): Pro
   try {
     const userId = req.user!.id;
     const file = req.file as Express.MulterS3.File;
-
+    console.log(file);
+    
     if (!file) {
       res.status(400).json({
         success: false,
@@ -46,6 +47,7 @@ export const uploadProfilePicture = async (req: AuthRequest, res: Response): Pro
 
 export const uploadPostImages = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
+    
     const files = req.files as Express.MulterS3.File[];
     
 
@@ -57,21 +59,8 @@ export const uploadPostImages = async (req: AuthRequest, res: Response): Promise
       return;
     }
 
-    // Get all image URLs
-    const imageUrls: string[] = files.map(file => file.location);
-    const postData: CreatePostDTO = {
-      caption: req.body.caption,
-      imageUrls,
-      workoutRef: req.body.workoutRef,
-      tags: req.body.tags ? JSON.parse(req.body.tags) : [],
-      visibility: req.body.visibility,
-      location: req.body.location
-    };
-
-    // Call your existing createPost method
-    const post = await postService.createPost(req.user!.id, postData);
-    console.log(post);
     
+    const imageUrls: string[] = files.map(file => file.location);
     res.status(200).json({
       success: true,
       message: 'Images uploaded successfully',

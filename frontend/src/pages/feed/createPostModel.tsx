@@ -12,7 +12,7 @@ interface CreatePostModalProps {
 }
 
 const CreatePostModal = ({ isOpen, onClose, onSuccess }: CreatePostModalProps) => {
-  const { createPost, isLoading } = useFeed();
+  const { createPost, isLoading,uploadPostPictures } = useFeed();
   
   const [formData, setFormData] = useState<CreatePostRequest>({
     caption: '',
@@ -32,37 +32,34 @@ const CreatePostModal = ({ isOpen, onClose, onSuccess }: CreatePostModalProps) =
     }
   };
 
+
   const removeFile = (index: number) => {
     setFiles(files.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
-      // Create FormData to send files + other data together
+      // 1️⃣ Upload images first
+      const uploadedUrls = await handleUpload();
+      console.log("uploaded images", uploadedUrls);
+      if (uploadedUrls===null){
+        return 
+      }
       
-      console.log(formData);
+      const postRequest: CreatePostRequest = {
+        caption: formData.caption,
+        imageUrls: uploadedUrls, // now contains uploaded URLs
+        tags: formData.tags || [],
+        location: formData.location,
+        visibility: formData.visibility,
+      };
+      console.log("post request",postRequest);
       
-      
-      const formDataToSend = new FormData();
-      
-      // Append text fields
-      formDataToSend.append('caption', formData.caption || '');
-      formDataToSend.append('location', formData.location || '');
-      formDataToSend.append('visibility', formData.visibility || "public");
-      
-      // Append tags as array
-      formDataToSend.append('tags', JSON.stringify(formData.tags || []));
-      
-      
-      // Append image files
-      files.forEach(file => {
-        formDataToSend.append('imagesUrls', file);
-      });
-      // Send everything in one call
-      const result = await createPost(formDataToSend);
-      
+      // 3️⃣ Send post request
+      const result = await createPost(postRequest); // send JSON, not FormData
+
       if (result.success) {
         // Reset form
         setFormData({
@@ -79,11 +76,27 @@ const CreatePostModal = ({ isOpen, onClose, onSuccess }: CreatePostModalProps) =
       } else {
         alert(result.error || 'Failed to create post');
       }
-    } catch (error) {
-      console.error("Post creation failed:", error);
-      alert('Failed to create post');
+    } catch (error: any) {
+      console.error('Post creation failed:', error);
+      alert(error.message || 'Failed to create post');
     }
   };
+
+
+     
+  const handleUpload = async () => {
+    if (!files) return;
+  
+    try {
+      const result = await uploadPostPictures(files); 
+      console.log(result);
+      
+       return result ;
+    } catch (err) {
+      console.error("Upload failed:", err);
+    }
+  };
+
 
   const addTag = () => {
     if (tagInput.trim() && !formData.tags?.includes(tagInput.trim())) {

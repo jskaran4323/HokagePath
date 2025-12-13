@@ -19,7 +19,8 @@ export const useFeed = () => {
     try {
       const response = await feedApi.getFeed(pageNum, 10);
        const newPosts = response.data.data;
-       console.log(newPosts);
+       console.log("fetch feed", response.data);
+      
        
       if (append) {
         setPosts(prev => [...prev, ...newPosts]);
@@ -52,8 +53,7 @@ export const useFeed = () => {
     setError(null);
     try {
       const response = await feedApi.getUserPosts(userId, pageNum, 10);
-      console.log(response.data);
-      
+    
       const userPosts = response.data.data;
       setPosts(userPosts);
       return { success: true, posts: userPosts };
@@ -89,7 +89,7 @@ export const useFeed = () => {
     setIsLoading(true);
     setError(null);
     try {
-      console.log(data);
+    
       
       const response = await feedApi.createPost(data);
       const post = response.data.data
@@ -171,17 +171,21 @@ export const useFeed = () => {
     }
   };
 
-  const uploadPostPictures  = async (file: File) =>{
+  const uploadPostPictures  = async (files: File[]) =>{
       const formData = new FormData();
-      formData.append('images', file);
+
+      files.forEach(file => {
+        formData.append('images', file);
+      });
   
       setIsLoading(true);
       setError(null);
       try {
         const response =  await feedApi.uploadPostImages(formData);
-        console.log(response);
-        
-        return {success: true};
+        const imageUrls = response.data.data.imageUrls;
+        console.log("uploaded urls", imageUrls);
+
+        return imageUrls;
       } catch (err: any) {
         const errorMessage = err.response?.data?.message  || "Failed to upload"
         setError(errorMessage)
