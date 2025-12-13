@@ -85,7 +85,7 @@ export const useAuth = () => {
   
     try {
       const response = await authApi.getMe();
-      console.log(response);
+    
       
       setUser(response.data.data.user);
       setProfile(response.data.data.fitnessProfile);

@@ -15,6 +15,7 @@ import MealDetail from '../pages/meals/MealDetails';
 import FeedPage from '../pages/feed/FeedPage';
 import UserProfilePage from '../pages/Profile/UserProfilePage';
 import NotFoundPage from './NotfoundPage';
+import WorkoutSession from '../pages/workout/workoutSession';
 
 const AppRoutes = () => {
   return (
@@ -141,6 +142,17 @@ const AppRoutes = () => {
           <ProtectedRoute>
             <Layout>
               <UserProfilePage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+<Route
+        path="/workout/:id"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <WorkoutSession />
             </Layout>
           </ProtectedRoute>
         }

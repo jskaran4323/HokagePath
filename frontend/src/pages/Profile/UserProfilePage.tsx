@@ -11,7 +11,7 @@ const UserProfilePage = () => {
   const { userId } = useParams<{ userId: string }>();
   const navigate = useNavigate();
   const { user: currentUser } = useAuth();
-  const { userProfile, followers, followings, isLoading: userLoading, fetchUserProfile, fetchFollowers,fetchFollowing, followUser, unfollowUser } = useUser();
+  const { userProfile, followers, followings, isLoading: userLoading, fetchUserProfile, fetchFollowers,fetchFollowing, followUser, unfollowUser} = useUser();
   const { posts, isLoading: postsLoading, fetchUserPosts } = useFeed();
 
   const [activeTab, setActiveTab] = useState<'posts' | 'followers' | 'following'>('posts');
@@ -20,6 +20,7 @@ const UserProfilePage = () => {
 
   const isOwnProfile = currentUser?.id === userId;
 
+  
   useEffect(() => {
     if (userId) {
       fetchUserProfile(userId);

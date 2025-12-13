@@ -52,7 +52,6 @@ export class AIService {
       const workoutText = response.text();
 
       const workout = this.parseWorkoutResponse(workoutText, preferences);
-      
       const createdWorkout = await WorkoutModel.create({
         userId,
         title: workout.title,

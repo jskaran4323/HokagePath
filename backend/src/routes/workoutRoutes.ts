@@ -5,6 +5,7 @@ import {
   getUserWorkouts,
   updateWorkout,
   deleteWorkout
+  
 } from '../controllers/workoutController';
 import { authenticate } from '../middleware/auth';
 
@@ -16,6 +17,7 @@ router.post('/', createWorkout);
 router.get('/', getUserWorkouts);
 router.get('/:id', getWorkout);
 router.put('/:id', updateWorkout);
+
 router.delete('/:id', deleteWorkout);
 
 export default router;

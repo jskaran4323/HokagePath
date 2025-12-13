@@ -1,5 +1,6 @@
 import { Navigate} from 'react-router-dom';
 import { useAuth } from '../../composables/useAuth';
+import { useEffect } from 'react';
 
 
 
@@ -8,8 +9,11 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { isAuthenticated, isLoading } = useAuth()
+  const { isAuthenticated, isLoading, fetchUserProfile } = useAuth()
 
+  useEffect(()=>{
+    fetchUserProfile()
+  },[])
   
 
 
@@ -21,7 +25,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     );
   }
   
-  console.log(isAuthenticated);
+  
   
   if (!isAuthenticated) {
     return <Navigate to="/login" replace  />;

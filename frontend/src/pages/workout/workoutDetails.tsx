@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // frontend/src/pages/Workouts/WorkoutDetail.tsx
 
 import { useEffect, useState } from 'react';
@@ -32,6 +33,8 @@ const WorkoutDetail = () => {
     try {
       const response = await workoutApi.getWorkout(id);
       setWorkout(response.data.data);
+      console.log(response.data.data);
+      
     } catch (error) {
       console.error('Failed to fetch workout:', error);
       alert('Failed to load workout');
@@ -42,34 +45,11 @@ const WorkoutDetail = () => {
   };
 
   const handleStart = async () => {
-    if (!id) return;
-    
-    setIsStarting(true);
-    try {
-      await workoutApi.startWorkout(id);
-      fetchWorkout();
-    } catch (error) {
-      console.error('Failed to start workout:', error);
-      alert('Failed to start workout');
-    } finally {
-      setIsStarting(false);
-    }
+    navigate(`/workout/${workout?.id}`)
   };
 
   const handleComplete = async () => {
-    if (!id) return;
-    
-    setIsCompleting(true);
-    try {
-      await workoutApi.completeWorkout(id, completionData);
-      alert('Workout completed! Great job!');
-      navigate('/workouts');
-    } catch (error) {
-      console.error('Failed to complete workout:', error);
-      alert('Failed to complete workout');
-    } finally {
-      setIsCompleting(false);
-    }
+    navigate(`/workout/${workout?.id}`)
   };
 
   const handleToggleExercise = async (exerciseIndex: number) => {

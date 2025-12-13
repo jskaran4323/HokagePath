@@ -3,6 +3,7 @@
 import apiClient from './client';
 
 export interface Exercise {
+  id: number;
   name: string;
   sets: number;
   reps: number;
@@ -64,9 +65,9 @@ export const workoutApi = {
   startWorkout: (id: string) => 
     apiClient.patch(`/workouts/${id}/start`),
 
-  // Complete workout
-  completeWorkout: (id: string, data?: { caloriesBurned?: number; notes?: string }) => 
-    apiClient.patch(`/workouts/${id}/complete`, data),
+  // // Complete workout
+  // completeWorkout: (id: string, data?: { caloriesBurned?: number; notes?: string }) => 
+  //   apiClient.patch(`/workouts/${id}/complete`, data),
 
   // Delete workout
   deleteWorkout: (id: string) => 

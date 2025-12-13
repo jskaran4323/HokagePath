@@ -27,7 +27,7 @@ export const createWorkout = async (req: AuthRequest, res: Response): Promise<vo
       data: workout
     });
 
-  } catch (error: any) {
+  } catch (error: any) {2
     if (error instanceof WorkoutServiceError) {
       res.status(error.statusCode).json({
         success: false,
@@ -106,6 +106,8 @@ export const getUserWorkouts = async (req: AuthRequest, res: Response): Promise<
 
 export const updateWorkout = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
+    console.log(req);
+    
     const userId = req.user!.id;
     const workoutId = req.params.id;
     const updateData: UpdateWorkoutDTO = req.body;
@@ -174,4 +176,8 @@ export const deleteWorkout = async (req: AuthRequest, res: Response): Promise<vo
       error: error.message
     });
   }
+
+ 
+
+
 };

@@ -5,7 +5,9 @@ import { useAuth } from '../../composables/useAuth';
 
 const DashboardPage = () => {
   const navigate = useNavigate();
-  const { user, isLoading, workoutStats, fitnessProfile } = useAuth();
+  const { user, isLoading, workoutStats, fitnessProfile} = useAuth();
+   
+
 
   if (isLoading) {
     return <div>Loading dashboard...</div>;

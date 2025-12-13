@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import UserModel, { User } from '../models/User';
 import WorkoutStatsModel from '../models/WorkoutStats';
 import { UpdateUserProfileDto, ChangePasswordDto, UserPublicProfileDto } from '../types/user.dto';
+import workoutService from './workoutService';
 
 export class UserServiceError extends Error{
     constructor(
@@ -58,7 +59,7 @@ export class UserService{
         if(!user){
             throw new UserServiceError("User not Found", 404);
         }
-        const workoutStats = WorkoutStatsModel.findById(userId);
+        const workoutStats = await workoutService.getWorkoutStats(userId);
 
         let isFollowing = false;
         if (currentUserId && currentUserId !== userId){
@@ -75,7 +76,7 @@ export class UserService{
             bio: user.bio,
             followersCount: user.followers.length ,
             followingCount: user.following.length ,
-            totalWorkouts: workoutStats?.totalWorkout || 0,
+            totalWorkouts: workoutStats?.totalWorkouts || 0,
             currentStreak: workoutStats?.currentStreak || 0,
             isFollowing
         }
