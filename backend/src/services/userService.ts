@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import UserModel, { User } from '../models/User';
-import WorkoutStatsModel from '../models/WorkoutStats';
+
 import { UpdateUserProfileDto, ChangePasswordDto, UserPublicProfileDto } from '../types/user.dto';
 import workoutService from './workoutService';
 

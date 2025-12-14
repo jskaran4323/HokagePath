@@ -3,36 +3,6 @@ import WorkoutStatsModel from '../models/WorkoutStats';
 import { CreateWorkoutDTO, UpdateWorkoutDTO, WorkoutResponseDTO } from '../types/workout.dto';
 import { WorkoutStatsDto } from '../types/workoutStatDto';
 
-// _id
-// 68f802683171290f990dc6cc
-// userId
-// 68f802683171290f990dc6c9
-// currentStreak
-// 0
-// longestStreak
-// 0
-// totalWorkouts
-// 0
-// totalWorkoutMinutes
-// 0
-// totalCaloriesBurned
-// 0
-// workoutsThisWeek
-// 0
-// workoutsThisMonth
-// 0
-
-// achievements
-// Array (empty)
-
-// streakHistory
-// Array (empty)
-// createdAt
-// 2025-10-21T22:00:08.113+00:00
-// updatedAt
-// 2025-10-21T22:00:08.113+00:00
-// __v
-// 0
 export class WorkoutServiceError extends Error {
   constructor(
     message: string,
