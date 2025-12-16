@@ -1,5 +1,5 @@
-import MealModel from '../models/Meal';
-import { CreateMealDTO, UpdateMealDTO, MealResponseDTO } from '../types/meal.dto';
+import MealModel from '../../models/Meal';
+import { CreateMealDTO, UpdateMealDTO, MealResponseDTO } from '../../types/meal.dto';
 
 export class MealServiceError extends Error {
   constructor(

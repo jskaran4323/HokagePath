@@ -8,8 +8,8 @@ import {
   getFollowers,
   getFollowing,
   searchUsers
-} from '../controllers/userController';
-import { authenticate } from '../middleware/auth';
+} from '../../v1/controllers/userController';
+import { authenticate } from '../../middleware/auth';
 
 const router = express.Router();
 

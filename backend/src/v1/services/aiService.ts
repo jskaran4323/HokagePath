@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import FitnessProfileModel from '../models/FitnessProfile';
-import WorkoutModel from '../models/Workout';
+import FitnessProfileModel from '../../models/FitnessProfile';
+import WorkoutModel from '../../models/Workout';
 
 export class AIServiceError extends Error {
   constructor(

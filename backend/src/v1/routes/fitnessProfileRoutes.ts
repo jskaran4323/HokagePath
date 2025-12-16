@@ -3,8 +3,8 @@ import {
   getFitnessProfile,
   updateFitnessProfile,
   addWeightEntry
-} from '../controllers/fitnessProfileController';
-import { authenticate } from '../middleware/auth';
+} from '../../v1/controllers/fitnessProfileController';
+import { authenticate } from '../../middleware/auth';
 
 const router = express.Router();
 

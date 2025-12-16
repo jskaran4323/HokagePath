@@ -7,8 +7,8 @@ import {
   deleteComment,
   likeComment,
   unlikeComment
-} from '../controllers/commentController';
-import { authenticate } from '../middleware/auth';
+} from '../../v1/controllers/commentController';
+import { authenticate } from '../../middleware/auth';
 
 const router = express.Router();
 

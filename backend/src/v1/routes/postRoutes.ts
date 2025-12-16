@@ -8,8 +8,8 @@ import {
   deletePost,
   likePost,
   unlikePost
-} from '../controllers/postController';
-import { authenticate } from '../middleware/auth';
+} from '../../v1/controllers/postController';
+import { authenticate } from '../../middleware/auth';
 
 const router = express.Router();
 

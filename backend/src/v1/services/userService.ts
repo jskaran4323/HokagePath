@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
-import UserModel, { User } from '../models/User';
+import UserModel, { User } from '../../models/User';
 
-import { UpdateUserProfileDto, ChangePasswordDto, UserPublicProfileDto } from '../types/user.dto';
+import { UpdateUserProfileDto, ChangePasswordDto, UserPublicProfileDto } from '../../types/user.dto';
 import workoutService from './workoutService';
 
 export class UserServiceError extends Error{

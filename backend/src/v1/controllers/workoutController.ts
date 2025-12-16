@@ -1,8 +1,8 @@
 import { Response } from 'express';
-import { AuthRequest } from '../middleware/auth';
+import { AuthRequest } from '../../middleware/auth';
 import workoutService, { WorkoutServiceError } from '../services/workoutService';
-import { CreateWorkoutDTO, UpdateWorkoutDTO } from '../types/workout.dto';
-import { validateCreateWorkout, validateUpdateWorkout } from '../utils/workoutValidation';
+import { CreateWorkoutDTO, UpdateWorkoutDTO } from '../../types/workout.dto';
+import { validateCreateWorkout, validateUpdateWorkout } from '../../utils/workoutValidation';
 
 export const createWorkout = async (req: AuthRequest, res: Response): Promise<void> => {
   try {

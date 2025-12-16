@@ -1,8 +1,14 @@
 import { Response } from 'express';
-import { AuthRequest } from '../middleware/auth';
+import { AuthRequest } from '../../middleware/auth';
 import aiService, { AIServiceError } from '../services/aiService';
-import MealModel from '../models/Meal';
-
+import MealModel from '../../models/Meal';
+/**
+ * 
+ * Generate Workout given fitness profile of the user
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const generateWorkout = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
@@ -33,6 +39,13 @@ export const generateWorkout = async (req: AuthRequest, res: Response): Promise<
     });
   }
 };
+
+/**
+ * Generate Workout plans for user given preferences of user
+ * @param req  
+ * @param res 
+ * @returns 
+ */
 
 export const generateMeal = async (req: AuthRequest, res: Response): Promise<void> => {
   try {

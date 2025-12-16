@@ -6,8 +6,8 @@ import {
   updateMeal,
   deleteMeal,
   getDailyNutrition
-} from '../controllers/mealController';
-import { authenticate } from '../middleware/auth';
+} from '../../v1/controllers/mealController';
+import { authenticate } from '../../middleware/auth';
 
 const router = express.Router();
 

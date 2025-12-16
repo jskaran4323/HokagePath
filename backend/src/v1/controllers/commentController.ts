@@ -1,9 +1,15 @@
 import { Response } from 'express';
-import { AuthRequest } from '../middleware/auth';
+import { AuthRequest } from '../../middleware/auth';
 import commentService, { CommentServiceError } from '../services/commentService';
-import { CreateCommentDTO, UpdateCommentDTO } from '../types/comment.dto';
-import { validateCreateComment, validateUpdateComment } from '../utils/commentValidation';
+import { CreateCommentDTO, UpdateCommentDTO } from '../../types/comment.dto';
+import { validateCreateComment, validateUpdateComment } from '../../utils/commentValidation';
 
+/**
+ * User Comment 
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const createComment = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;

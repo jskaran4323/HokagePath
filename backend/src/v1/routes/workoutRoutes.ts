@@ -6,8 +6,8 @@ import {
   updateWorkout,
   deleteWorkout
   
-} from '../controllers/workoutController';
-import { authenticate } from '../middleware/auth';
+} from '../../v1/controllers/workoutController';
+import { authenticate } from '../../middleware/auth';
 
 const router = express.Router();
 

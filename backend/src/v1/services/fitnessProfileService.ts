@@ -1,5 +1,5 @@
-import FitnessProfileModel from '../models/FitnessProfile';
-import { UpdateFitnessProfileDTO, AddWeightEntryDTO, FitnessProfileResponseDTO } from '../types/fitnessProfile.dto';
+import FitnessProfileModel from '../../models/FitnessProfile';
+import { UpdateFitnessProfileDTO, AddWeightEntryDTO, FitnessProfileResponseDTO } from '../../types/fitnessProfile.dto';
 
 export class FitnessProfileServiceError extends Error {
   constructor(

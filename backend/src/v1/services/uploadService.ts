@@ -1,7 +1,7 @@
 // backend/src/services/uploadService.ts
 
 import { DeleteObjectCommand } from '@aws-sdk/client-s3';
-import { s3, BUCKET_NAME } from '../config/aws';
+import { s3, BUCKET_NAME } from '../../config/aws';
 
 export class UploadServiceError extends Error {
   constructor(

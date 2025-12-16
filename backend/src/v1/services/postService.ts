@@ -1,6 +1,6 @@
-import PostModel from '../models/Post';
-import UserModel from '../models/User';
-import { CreatePostDTO, UpdatePostDTO, PostResponseDTO } from '../types/post.dto';
+import PostModel from '../../models/Post';
+import UserModel from '../../models/User';
+import { CreatePostDTO, UpdatePostDTO, PostResponseDTO } from '../../types/post.dto';
 
 export class PostServiceError extends Error {
   constructor(

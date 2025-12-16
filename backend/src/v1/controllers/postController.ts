@@ -1,8 +1,8 @@
 import { Response } from 'express';
-import { AuthRequest } from '../middleware/auth';
+import { AuthRequest } from '../../middleware/auth';
 import postService, { PostServiceError } from '../services/postService';
-import { CreatePostDTO, UpdatePostDTO } from '../types/post.dto';
-import { validateCreatePost, validateUpdatePost } from '../utils/postValidation';
+import { CreatePostDTO, UpdatePostDTO } from '../../types/post.dto';
+import { validateCreatePost, validateUpdatePost } from '../../utils/postValidation';
 
 export const createPost = async (req: AuthRequest, res: Response): Promise<void> => {
   try {

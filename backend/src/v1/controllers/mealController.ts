@@ -1,8 +1,8 @@
 import { Response } from 'express';
-import { AuthRequest } from '../middleware/auth';
+import { AuthRequest } from '../../middleware/auth';
 import mealService, { MealServiceError } from '../services/mealService';
-import { CreateMealDTO, UpdateMealDTO } from '../types/meal.dto';
-import { validateCreateMeal, validateUpdateMeal } from '../utils/mealValidation';
+import { CreateMealDTO, UpdateMealDTO } from '../../types/meal.dto';
+import { validateCreateMeal, validateUpdateMeal } from '../../utils/mealValidation';
 
 export const createMeal = async (req: AuthRequest, res: Response): Promise<void> => {
   try {

@@ -3,12 +3,12 @@ import {
   uploadProfilePicture as uploadProfilePictureController,
   uploadPostImages as uploadPostImagesController,
   deleteImage
-} from '../controllers/uploadController';
-import { authenticate } from '../middleware/auth';
+} from '../../v1/controllers/uploadController';
+import { authenticate } from '../../middleware/auth';
 import {
   uploadProfilePicture as uploadProfilePictureMiddleware,
   uploadPostImages as uploadPostImagesMiddleware
-} from '../middleware/upload';
+} from '../../middleware/upload';
 
 const router = express.Router();
 

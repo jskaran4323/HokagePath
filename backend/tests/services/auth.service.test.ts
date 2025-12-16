@@ -1,4 +1,4 @@
-import authService, { AuthService } from "../../src/services/authService";
+import authService, { AuthService } from "../../src/v1/services/authService";
 
 import UserModel from "../../src/models/User";
 import FitnessProfileModel from "../../src/models/FitnessProfile";
@@ -9,7 +9,6 @@ jest.mock("bcryptjs");
 jest.mock("../../src/models/User");
 jest.mock("../../src/models/FitnessProfile");
 jest.mock("../../src/models/WorkoutStats");
-
 
 const registerData = {
     username: "testuser",
@@ -22,6 +21,7 @@ const registerData = {
   
     afterEach(() => {
       jest.clearAllMocks();
+
     });
   
     it("should create user and related records", async () => {

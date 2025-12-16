@@ -1,6 +1,6 @@
 import express from 'express';
-import { generateWorkout, generateMeal } from '../controllers/aiController';
-import { authenticate } from '../middleware/auth';
+import { generateWorkout, generateMeal } from '../../v1/controllers/aiController';
+import { authenticate } from '../../middleware/auth';
 
 const router = express.Router();
 

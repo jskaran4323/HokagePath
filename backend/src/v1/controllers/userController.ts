@@ -1,8 +1,8 @@
 import { Response } from 'express';
-import { AuthRequest } from '../middleware/auth';
+import { AuthRequest } from '../../middleware/auth';
 import userService, { UserServiceError } from '../services/userService';
-import {  ChangePasswordDto, UpdateUserProfileDto } from '../types/user.dto';
-import { validateUpdateProfile, validateChangePassword } from '../utils/uservalidation';
+import {  ChangePasswordDto, UpdateUserProfileDto } from '../../types/user.dto';
+import { validateUpdateProfile, validateChangePassword } from '../../utils/uservalidation';
 
 export const updateProfile = async (req: AuthRequest, res: Response): Promise<void>=>{
     try{

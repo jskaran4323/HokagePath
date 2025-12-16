@@ -1,9 +1,7 @@
 import { Response } from 'express';
-import { AuthRequest } from '../middleware/auth';
+import { AuthRequest } from '../../middleware/auth';
 import userService from '../services/userService';
 import uploadService from '../services/uploadService';
-import postService from '../services/postService';
-import { CreatePostDTO } from '../types/post.dto';
 export const uploadProfilePicture = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;

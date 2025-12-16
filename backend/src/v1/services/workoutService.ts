@@ -1,7 +1,7 @@
-import WorkoutModel from '../models/Workout';
-import WorkoutStatsModel from '../models/WorkoutStats';
-import { CreateWorkoutDTO, UpdateWorkoutDTO, WorkoutResponseDTO } from '../types/workout.dto';
-import { WorkoutStatsDto } from '../types/workoutStatDto';
+import WorkoutModel from '../../models/Workout';
+import WorkoutStatsModel from '../../models/WorkoutStats';
+import { CreateWorkoutDTO, UpdateWorkoutDTO, WorkoutResponseDTO } from '../../types/workout.dto';
+import { WorkoutStatsDto } from '../../types/workoutStatDto';
 
 export class WorkoutServiceError extends Error {
   constructor(

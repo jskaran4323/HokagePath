@@ -1,9 +1,16 @@
 import { Response } from 'express';
-import { AuthRequest } from '../middleware/auth';
+import { AuthRequest } from '../../middleware/auth';
 import fitnessProfileService, { FitnessProfileServiceError } from '../services/fitnessProfileService';
-import { UpdateFitnessProfileDTO, AddWeightEntryDTO } from '../types/fitnessProfile.dto';
-import { validateUpdateFitnessProfile, validateAddWeightEntry } from '../utils/fitnessProfileValidation';
+import { UpdateFitnessProfileDTO, AddWeightEntryDTO } from '../../types/fitnessProfile.dto';
+import { validateUpdateFitnessProfile, validateAddWeightEntry } from '../../utils/fitnessProfileValidation';
 
+
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const getFitnessProfile = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
@@ -33,6 +40,12 @@ export const getFitnessProfile = async (req: AuthRequest, res: Response): Promis
   }
 };
 
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const updateFitnessProfile = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;

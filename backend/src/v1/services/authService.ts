@@ -1,9 +1,9 @@
 
 import bcrypt from 'bcryptjs';
-import UserModel from '../models/User';
-import FitnessProfileModel from '../models/FitnessProfile';
-import WorkoutStatsModel from '../models/WorkoutStats';
-import { RegisterDTO, LoginDTO, UserResponseDTO } from '../types/auth.dto';
+import UserModel from '../../models/User';
+import FitnessProfileModel from '../../models/FitnessProfile';
+import WorkoutStatsModel from '../../models/WorkoutStats';
+import { RegisterDTO, LoginDTO, UserResponseDTO } from '../../types/auth.dto';
 
 export class AuthServiceError extends Error {
   constructor(

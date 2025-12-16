@@ -1,7 +1,7 @@
-import CommentModel from '../models/Comment';
-import PostModel from '../models/Post';
-import UserModel from '../models/User';
-import { CreateCommentDTO, UpdateCommentDTO, CommentResponseDTO } from '../types/comment.dto';
+import CommentModel from '../../models/Comment';
+import PostModel from '../../models/Post';
+import UserModel from '../../models/User';
+import { CreateCommentDTO, UpdateCommentDTO, CommentResponseDTO } from '../../types/comment.dto';
 
 export class CommentServiceError extends Error {
   constructor(

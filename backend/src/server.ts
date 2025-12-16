@@ -6,16 +6,16 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
-import authRoutes from './routes/authRoutes';
+import authRoutes from './v1/routes/authRoutes';
 // Load environment variables
-import workoutRoutes from './routes/workoutRoutes';
-import mealRoutes from './routes/mealRoutes';
-import postRoutes from './routes/postRoutes';
-import commentRoutes from './routes/commentRoutes';
-import aiRoutes from './routes/aiRoutes';
-import fitnessProfileRoutes from './routes/fitnessProfileRoutes';
-import userRoutes from './routes/userRoutes';
-import uploadRoutes from './routes/uploadroutes';
+import workoutRoutes from './v1/routes/workoutRoutes';
+import mealRoutes from './v1/routes/mealRoutes';
+import postRoutes from './v1/routes/postRoutes';
+import commentRoutes from './v1/routes/commentRoutes';
+import aiRoutes from './v1/routes/aiRoutes';
+import fitnessProfileRoutes from './v1/routes/fitnessProfileRoutes';
+import userRoutes from './v1/routes/userRoutes';
+import uploadRoutes from './v1/routes/uploadroutes';
 
 dotenv.config();
 
@@ -53,16 +53,17 @@ cookie: {
 }));
 
 
+const API_VERSION = "v1";
 
-app.use('/api/auth', authRoutes);
-app.use('/api/workouts', workoutRoutes);
-app.use('/api/meals', mealRoutes);
-app.use('/api/posts', postRoutes);
-app.use('/api/comments', commentRoutes);
-app.use('/api/ai', aiRoutes);
-app.use('/api/fitness-profile', fitnessProfileRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/upload', uploadRoutes);
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/workouts', workoutRoutes);
+app.use('/api/v1/meals', mealRoutes);
+app.use('/api/v1/posts', postRoutes);
+app.use('/api/v1/comments', commentRoutes);
+app.use('/api/v1/ai', aiRoutes);
+app.use('/api/v1/fitness-profile', fitnessProfileRoutes);
+app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/upload', uploadRoutes);
 
 // Basic test route
 app.get('/', (req: Request, res: Response) => {

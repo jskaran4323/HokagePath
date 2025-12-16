@@ -1,11 +1,14 @@
 import { Request, Response } from 'express';
-import { RegisterDTO, LoginDTO } from '../types/auth.dto';
-import { validateRegisterInput, validateLoginInput } from '../utils/validation';
+import { RegisterDTO, LoginDTO } from '../../types/auth.dto';
+import { validateRegisterInput, validateLoginInput } from '../../utils/validation';
 import authService, { AuthServiceError } from '../services/authService';
 
-// Controller only handles HTTP requests and responses
-// All business logic is in the service
-
+/**
+ * User Registration
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
     const registerData: RegisterDTO = req.body;
@@ -56,6 +59,13 @@ export const register = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+/**
+ * Logging in user
+ * @param req 
+ * @param res 
+ * @returns 
+ */
+
 export const login = async (req: Request, res: Response): Promise<void> => {
   try {
     const loginData: LoginDTO = req.body;
@@ -105,6 +115,11 @@ export const login = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+/**
+ * Logout user
+ * @param req 
+ * @param res 
+ */
 
 export const logout = async (req: Request, res: Response): Promise<void> => {
   try {
