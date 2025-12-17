@@ -11,10 +11,12 @@ export interface ExerciseDTO {
     completed?: boolean;
   }
   
+  type workoutType = 'strength' | 'cardio' | 'flexibility' | 'sports' | 'mixed' | 'other';
   export interface CreateWorkoutDTO {
+    id?: number
     title: string;
     description?: string;
-    workoutType: 'strength' | 'cardio' | 'flexibility' | 'sports' | 'mixed' | 'other';
+    workoutType: workoutType;
     exercises: ExerciseDTO[];
     duration: number;
     caloriesBurned?: number;

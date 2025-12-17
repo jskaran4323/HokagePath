@@ -119,6 +119,8 @@ const registerData = {
       expect(result.fitnessProfile).toBe(mockFitnessProfile);
       expect(result.workoutStats).toBe(mockWorkoutStats);
     })
+
+   
   });
 
 
