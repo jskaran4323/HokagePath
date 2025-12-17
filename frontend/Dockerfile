@@ -1,14 +1,13 @@
-# PULL THE DOWNLOAD
-FROM node:22 
-# SET WORKING DIRECTORY
-WORKDIR /usr/src/app
-# COPIED MODULES NEEDED
+FROM node:21-alpine
+
+WORKDIR /app
+
 COPY package*.json ./
-# INSTALL NPM INSIDE CONTAINER
-RUN npm install --build-from-source
-# COPIED ENTRIE PROJECT
+
+RUN npm install
+
 COPY . .
-# EXPORT THE PORT
+
 EXPOSE 5173
-# DEVELOPMENT COMMAND
-CMD [ "npm" , "run", "dev" ]
+
+CMD [ "npm", "run", "dev" ]

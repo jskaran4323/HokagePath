@@ -6,7 +6,8 @@ import mongoose from 'mongoose';
 import app from './app';
 import pino from 'pino';
 
-const PORT = process.env.PORT || 3000;
+const PORT = parseInt(process.env.PORT || '4000', 10);
+
 const MONGODB_URI = process.env.MONGODB_URI || '';
 const logger = pino({ level: 'info' });
 
@@ -15,9 +16,10 @@ const startServer = async (): Promise<void> => {
     await mongoose.connect(MONGODB_URI);
     logger.info('✅ Connected to MongoDB');
 
-    app.listen(PORT, () => {
-      logger.info(`🚀 Server running on http://localhost:${PORT}`);
+    app.listen(PORT, '0.0.0.0', () => {
+      logger.info(`🚀 Server running on http://0.0.0.0:${PORT}`);
     });
+    
   } catch (error) {
     logger.error(error, '❌ Failed to start server');
     process.exit(1);

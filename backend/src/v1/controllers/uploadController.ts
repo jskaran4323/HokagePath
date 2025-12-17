@@ -29,7 +29,7 @@ export const uploadProfilePicture = async (req: AuthRequest, res: Response): Pro
     // Get the S3 URL
     const imageUrl = file.location;
 
-    // Update user profile with new image URL
+   
     const user = await userService.updateProfile(userId, {
       profilePicture: imageUrl
     });
@@ -62,7 +62,8 @@ export const uploadProfilePicture = async (req: AuthRequest, res: Response): Pro
  */
 export const uploadPostImages = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    
+       
+       
     const files = req.files as Express.MulterS3.File[];
     
 
@@ -76,6 +77,8 @@ export const uploadPostImages = async (req: AuthRequest, res: Response): Promise
 
     
     const imageUrls: string[] = files.map(file => file.location);
+  
+    
     res.status(200).json({
       success: true,
       message: 'Images uploaded successfully',
