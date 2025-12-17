@@ -2,6 +2,16 @@ import { Response } from 'express';
 import { AuthRequest } from '../../middleware/auth';
 import userService from '../services/userService';
 import uploadService from '../services/uploadService';
+
+
+//Amazon S3 Bucket starting point
+
+/**
+ * Upload Profile pictures to cloud
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const uploadProfilePicture = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
@@ -43,6 +53,13 @@ export const uploadProfilePicture = async (req: AuthRequest, res: Response): Pro
   }
 };
 
+
+/**
+ * Upload Post Images to cloud
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const uploadPostImages = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     
@@ -77,6 +94,12 @@ export const uploadPostImages = async (req: AuthRequest, res: Response): Promise
   }
 };
 
+/**
+ * Delete Image form cloud
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const deleteImage = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { imageUrl } = req.body;

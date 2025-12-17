@@ -16,12 +16,12 @@ export class AIService {
   private genAI?: GoogleGenerativeAI;
   private model?: any;
 
-  // Empty constructor - don't initialize here
+  
   constructor() {}
 
-  // Initialize only when first method is called
+  
   private initialize() {
-    if (this.genAI) return; // Already initialized
+    if (this.genAI) return;
     
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
@@ -37,7 +37,7 @@ export class AIService {
     equipment?: string[];
     focus?: string;
   }): Promise<any> {
-    this.initialize(); // Initialize here instead
+    this.initialize(); 
     
     try {
       const fitnessProfile = await FitnessProfileModel.findOne({ userId });

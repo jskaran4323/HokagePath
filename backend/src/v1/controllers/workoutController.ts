@@ -4,6 +4,12 @@ import workoutService, { WorkoutServiceError } from '../services/workoutService'
 import { CreateWorkoutDTO, UpdateWorkoutDTO } from '../../types/workout.dto';
 import { validateCreateWorkout, validateUpdateWorkout } from '../../utils/workoutValidation';
 
+/**
+ * Create a workout
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const createWorkout = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
@@ -45,6 +51,13 @@ export const createWorkout = async (req: AuthRequest, res: Response): Promise<vo
   }
 };
 
+/**
+ * Get user workout 
+ * @param req 
+ * @param res 
+ * @returns 
+ */
+
 export const getWorkout = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
@@ -75,6 +88,12 @@ export const getWorkout = async (req: AuthRequest, res: Response): Promise<void>
   }
 };
 
+
+/**
+ * Get User workouts
+ * @param req 
+ * @param res 
+ */
 export const getUserWorkouts = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
@@ -104,6 +123,12 @@ export const getUserWorkouts = async (req: AuthRequest, res: Response): Promise<
   }
 };
 
+/**
+ * Update user workout 
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const updateWorkout = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     console.log(req);
@@ -148,6 +173,12 @@ export const updateWorkout = async (req: AuthRequest, res: Response): Promise<vo
   }
 };
 
+/**
+ * Delete a user workout
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const deleteWorkout = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;

@@ -87,7 +87,17 @@ export const updateFitnessProfile = async (req: AuthRequest, res: Response): Pro
   }
 };
 
+
+
+//TODO:
+/**
+ * User can Add weight entry (not used yet)
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const addWeightEntry = async (req: AuthRequest, res: Response): Promise<void> => {
+ 
   try {
     const userId = req.user!.id;
     const weightData: AddWeightEntryDTO = req.body;

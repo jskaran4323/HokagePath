@@ -5,7 +5,7 @@ import { CreateCommentDTO, UpdateCommentDTO } from '../../types/comment.dto';
 import { validateCreateComment, validateUpdateComment } from '../../utils/commentValidation';
 
 /**
- * User Comment 
+ * User comment create
  * @param req 
  * @param res 
  * @returns 
@@ -52,6 +52,12 @@ export const createComment = async (req: AuthRequest, res: Response): Promise<vo
   }
 };
 
+
+/**
+ * Get specific post comments
+ * @param req
+ * @param res 
+ */
 export const getPostComments = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user?.id;
@@ -75,6 +81,12 @@ export const getPostComments = async (req: AuthRequest, res: Response): Promise<
   }
 };
 
+
+/**
+ * Get all repiles to a specific comment
+ * @param req 
+ * @param res 
+ */
 export const getCommentReplies = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user?.id;
@@ -98,6 +110,13 @@ export const getCommentReplies = async (req: AuthRequest, res: Response): Promis
   }
 };
 
+
+/**
+ * update user comment
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const updateComment = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
@@ -140,6 +159,12 @@ export const updateComment = async (req: AuthRequest, res: Response): Promise<vo
   }
 };
 
+/**
+ * Delete a comment
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const deleteComment = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;

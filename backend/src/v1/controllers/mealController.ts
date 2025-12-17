@@ -4,6 +4,13 @@ import mealService, { MealServiceError } from '../services/mealService';
 import { CreateMealDTO, UpdateMealDTO } from '../../types/meal.dto';
 import { validateCreateMeal, validateUpdateMeal } from '../../utils/mealValidation';
 
+
+/**
+ * Creating meal 
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const createMeal = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
@@ -45,8 +52,16 @@ export const createMeal = async (req: AuthRequest, res: Response): Promise<void>
   }
 };
 
+/**
+ *  Fetch meal of a given user 
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const getMeal = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
+    console.log(req.body);
+    
     const userId = req.user!.id;
     const mealId = req.params.id;
 
@@ -75,6 +90,13 @@ export const getMeal = async (req: AuthRequest, res: Response): Promise<void> =>
   }
 };
 
+
+//TODO:
+/**
+ * Get user meals depend on certain conditions 
+ * @param req 
+ * @param res 
+ */
 export const getUserMeals = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;

@@ -3,7 +3,13 @@ import { AuthRequest } from '../../middleware/auth';
 import postService, { PostServiceError } from '../services/postService';
 import { CreatePostDTO, UpdatePostDTO } from '../../types/post.dto';
 import { validateCreatePost, validateUpdatePost } from '../../utils/postValidation';
-
+/**
+ * 
+ * User creating post
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const createPost = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
@@ -54,6 +60,12 @@ export const createPost = async (req: AuthRequest, res: Response): Promise<void>
   }
 };
 
+/**
+ * Get a user post
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const getPost = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user?.id;
@@ -84,6 +96,13 @@ export const getPost = async (req: AuthRequest, res: Response): Promise<void> =>
   }
 };
 
+
+/**
+ * User user post
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const getFeed = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
@@ -120,6 +139,13 @@ export const getFeed = async (req: AuthRequest, res: Response): Promise<void> =>
   }
 };
 
+
+/**
+ * Get User all posts
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const getUserPosts = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const currentUserId = req.user?.id;
@@ -151,6 +177,12 @@ export const getUserPosts = async (req: AuthRequest, res: Response): Promise<voi
   }
 };
 
+/**
+ * Update User posts
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const updatePost = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
@@ -192,6 +224,12 @@ export const updatePost = async (req: AuthRequest, res: Response): Promise<void>
     });
   }
 };
+/**
+ * Delete a user post
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 
 export const deletePost = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
@@ -223,6 +261,14 @@ export const deletePost = async (req: AuthRequest, res: Response): Promise<void>
   }
 };
 
+
+//NOTE: Maybe need to a separate controller for this 
+/**
+ * Like user post
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const likePost = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
@@ -254,6 +300,12 @@ export const likePost = async (req: AuthRequest, res: Response): Promise<void> =
   }
 };
 
+/**
+ * Unlike user post
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const unlikePost = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;

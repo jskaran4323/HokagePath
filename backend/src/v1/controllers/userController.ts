@@ -4,6 +4,13 @@ import userService, { UserServiceError } from '../services/userService';
 import {  ChangePasswordDto, UpdateUserProfileDto } from '../../types/user.dto';
 import { validateUpdateProfile, validateChangePassword } from '../../utils/uservalidation';
 
+
+/**
+ * Update user profile
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export const updateProfile = async (req: AuthRequest, res: Response): Promise<void>=>{
     try{
         const userId = req.user!.id;
@@ -86,6 +93,13 @@ export const updateProfile = async (req: AuthRequest, res: Response): Promise<vo
         }
       };
       
+    /**
+     * Update user Profile
+     * @param req 
+     * @param res 
+     * @returns 
+     */
+
       export const getUserProfile = async (req: AuthRequest, res: Response): Promise<void> => {
         try {
           const targetUserId = req.params.userId;
@@ -117,6 +131,13 @@ export const updateProfile = async (req: AuthRequest, res: Response): Promise<vo
         }
       };
       
+
+      /**
+       * Follow a user
+       * @param req 
+       * @param res 
+       * @returns 
+       */
       export const followUser = async (req: AuthRequest, res: Response): Promise<void> => {
         try {
           const userId = req.user!.id;
@@ -147,6 +168,12 @@ export const updateProfile = async (req: AuthRequest, res: Response): Promise<vo
         }
       };
       
+      /**
+       * Unfollow a user
+       * @param req 
+       * @param res 
+       * @returns 
+       */
       export const unfollowUser = async (req: AuthRequest, res: Response): Promise<void> => {
         try {
           const userId = req.user!.id;
@@ -177,6 +204,13 @@ export const updateProfile = async (req: AuthRequest, res: Response): Promise<vo
         }
       };
       
+
+      /**
+       * Get total follower of a user
+       * @param req 
+       * @param res 
+       * @returns 
+       */
       export const getFollowers = async (req: AuthRequest, res: Response): Promise<void> => {
         try {
           const userId = req.params.userId;
@@ -206,6 +240,13 @@ export const updateProfile = async (req: AuthRequest, res: Response): Promise<vo
         }
       };
       
+
+      /**
+       * Get Total following of a user
+       * @param req 
+       * @param res 
+       * @returns 
+       */
       export const getFollowing = async (req: AuthRequest, res: Response): Promise<void> => {
         try {
           const userId = req.params.userId;
@@ -235,6 +276,14 @@ export const updateProfile = async (req: AuthRequest, res: Response): Promise<vo
         }
       };
       
+
+      //TODO:
+      /**
+       * Search user
+       * @param req 
+       * @param res 
+       * @returns 
+       */
       export const searchUsers = async (req: AuthRequest, res: Response): Promise<void> => {
         try {
           const query = req.query.q as string;
