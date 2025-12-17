@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+ frontend:
+   build:
+    context: ./frontend
+    dockerfile: Dockerfile
+   container_name: frontend
+   ports:
+     - "3000:5173"
+   volumes:
+     - ./frontend:/app
+     - /app/node_modules
+   env_file:
+     - ./frontend/.env  
+   environment:
+      - CHOKIDAR_USEPOLLING=true
+   depends_on:
+      - backend
+   networks:
+      - app-network
+   stdin_open: true  # For React
+   tty: true   
+
+ backend:
+   build:
+     context: ./backend
+     dockerfile: Dockerfile
+   container_name: backend
+   ports:
+     - "5001:4000"
+   volumes:
+     - ./backend:/app
+     - /app/node_modules
+   env_file:
+     - ./backend/.env  
+   environment:
+     - DATABASE_URL=${MONGODB_URI}
+   depends_on:
+      - mongo
+   networks:
+      - app-network
+   restart: unless-stopped         
+ mongo:
+    image: mongo:7
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    networks:
+      - app-network
+volumes:
+  mongo-data:
+  # postgres-data:
+
+networks:
+  app-network:
+    driver: bridge      
