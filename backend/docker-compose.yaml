@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    # Make sure there's NO environment section with credentials
+
+  app:
+    build: .
+    container_name: backend
+    restart: always
+    ports:
+      - "3001:5000"
+    depends_on:
+      - mongo
+    env_file:
+      - .env
+
+volumes:
+  mongo-data:
