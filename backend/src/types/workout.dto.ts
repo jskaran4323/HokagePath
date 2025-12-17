@@ -13,7 +13,6 @@ export interface ExerciseDTO {
   
   type workoutType = 'strength' | 'cardio' | 'flexibility' | 'sports' | 'mixed' | 'other';
   export interface CreateWorkoutDTO {
-    id?: number
     title: string;
     description?: string;
     workoutType: workoutType;
