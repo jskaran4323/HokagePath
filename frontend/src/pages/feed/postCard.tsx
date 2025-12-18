@@ -1,7 +1,5 @@
-// frontend/src/components/Feed/PostCard.tsx
 
 import { useState } from 'react';
-//import { useNavigate } from 'react-router-dom';
 import { useFeed } from '../../composables/useFeed';
 import { useAuth } from '../../composables/useAuth';
 import type { Post } from '../../api/feed.api';

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Navigate} from 'react-router-dom';
 import { useAuth } from '../../composables/useAuth';
 import { useEffect } from 'react';
@@ -25,12 +26,10 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     );
   }
   
-  
-  
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace  />;
+    return <Navigate to="/login" replace />;
   }
-
+  
   
   return children;
 };

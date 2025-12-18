@@ -17,12 +17,18 @@ import UserProfilePage from '../pages/Profile/UserProfilePage';
 import NotFoundPage from './NotfoundPage';
 import WorkoutSession from '../pages/workout/workoutSession';
 import SearchPage from '../pages/searchPage/searchPage';
+import LandingPage from '../pages/Dashboard/LandingPage';
+import { useAuthStore } from '../store/authStore';
+
+
 
 const AppRoutes = () => {
+ const isAuthenticated = useAuthStore();
   return (
     <Routes>
 
       {/* Public */}
+      <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
 
@@ -169,11 +175,10 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
-
-
-
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
-
+      <Route 
+  path="/" 
+  element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LandingPage />} 
+/>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
