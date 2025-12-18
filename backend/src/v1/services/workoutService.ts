@@ -49,7 +49,7 @@ export class WorkoutService {
       tags: data.tags,
       status: 'scheduled'
     });
-    console.log(workout.caloriesBurned);
+ 
     
 
     return this.toWorkoutResponse(workout);

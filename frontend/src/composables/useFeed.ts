@@ -12,14 +12,14 @@ export const useFeed = () => {
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
 
-  // Fetch feed
+ 
   const fetchFeed = async (pageNum: number = 1, append: boolean = false) => {
     setIsLoading(true);
     setError(null);
     try {
       const response = await feedApi.getFeed(pageNum, 10);
        const newPosts = response.data.data;
-       console.log("fetch feed", response.data);
+    
       
        
       if (append) {
@@ -41,13 +41,13 @@ export const useFeed = () => {
     }
   };
 
-  // Load more posts
+ 
   const loadMore = async () => {
     if (!hasMore || isLoading) return;
     await fetchFeed(page + 1, true);
   };
 
-  // Get user posts
+ 
   const fetchUserPosts = async (userId: string, pageNum: number = 1) => {
     setIsLoading(true);
     setError(null);
@@ -66,7 +66,6 @@ export const useFeed = () => {
     }
   };
 
-  // Get single post
   const fetchPost = async (postId: string) => {
     setIsLoading(true);
     setError(null);
@@ -84,7 +83,7 @@ export const useFeed = () => {
     }
   };
 
-  // Create post
+  
   const createPost = async (data: CreatePostRequest | FormData) => {
     setIsLoading(true);
     setError(null);
@@ -104,7 +103,7 @@ export const useFeed = () => {
     }
   };
 
-  // Delete post
+  
   const deletePost = async (postId: string) => {
     setIsLoading(true);
     setError(null);
@@ -121,7 +120,7 @@ export const useFeed = () => {
     }
   };
 
-  // Like post
+  
   const likePost = async (postId: string) => {
     try {
       await feedApi.likePost(postId);
@@ -146,7 +145,7 @@ export const useFeed = () => {
     }
   };
 
-  // Unlike post
+  
   const unlikePost = async (postId: string) => {
     try {
       await feedApi.unlikePost(postId);
@@ -183,7 +182,7 @@ export const useFeed = () => {
       try {
         const response =  await feedApi.uploadPostImages(formData);
         const imageUrls = response.data.data.imageUrls;
-        console.log("uploaded urls", imageUrls);
+    
 
         return imageUrls;
       } catch (err: any) {
@@ -198,7 +197,7 @@ export const useFeed = () => {
 
 
   return {
-    // State
+   
     posts,
     currentPost,
     isLoading,
@@ -206,7 +205,7 @@ export const useFeed = () => {
     hasMore,
     page,
 
-    // Actions
+    
     fetchFeed,
     loadMore,
     fetchUserPosts,
@@ -217,7 +216,7 @@ export const useFeed = () => {
     unlikePost,
     uploadPostPictures,
 
-    // Setters
+    
     setCurrentPost,
     clearError: () => setError(null),
   };

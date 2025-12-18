@@ -131,8 +131,6 @@ export const getUserWorkouts = async (req: AuthRequest, res: Response): Promise<
  */
 export const updateWorkout = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    console.log(req);
-    
     const userId = req.user!.id;
     const workoutId = req.params.id;
     const updateData: UpdateWorkoutDTO = req.body;

@@ -13,7 +13,7 @@ import { validateCreatePost, validateUpdatePost } from '../../utils/postValidati
 export const createPost = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
-     console.log(req.body.imageUrls);
+    
      
     const postData: CreatePostDTO = {
       caption: req.body.caption,
@@ -106,7 +106,7 @@ export const getPost = async (req: AuthRequest, res: Response): Promise<void> =>
 export const getFeed = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
-    console.log(userId);
+    (userId);
     
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 20;

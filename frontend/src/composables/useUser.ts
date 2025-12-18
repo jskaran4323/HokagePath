@@ -13,15 +13,15 @@ export const useUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Get user profile
+ 
   const fetchUserProfile = async (userId: string) => {
     setIsLoading(true);
     setError(null);
     try {
       const response = await userApi.getUserProfile(userId);
-      console.log('User Profile Response:', response.data); // Debug log
+   
       
-      // Extract profile from response
+    
       const profile = response.data.data || response.data.user || response.data;
       setUserProfile(profile);
       return { success: true, profile };
@@ -35,7 +35,7 @@ export const useUser = () => {
     }
   };
 
-  // Get current user
+ 
   const fetchCurrentUser = async () => {
     setIsLoading(true);
     setError(null);
@@ -53,7 +53,6 @@ export const useUser = () => {
     }
   };
 
-  // Update profile
   const updateProfile = async (data: UpdateProfileRequest) => {
     setIsLoading(true);
     setError(null);
@@ -71,7 +70,7 @@ export const useUser = () => {
     }
   };
 
-  // Follow user
+
   const followUser = async (userId: string) => {
     try {
       await userApi.followUser(userId);
@@ -91,12 +90,11 @@ export const useUser = () => {
     }
   };
 
-  // Unfollow user
   const unfollowUser = async (userId: string) => {
     try {
       await userApi.unfollowUser(userId);
       
-      // Update local state
+    
       if (userProfile && userProfile.id === userId) {
         setUserProfile({
           ...userProfile,
@@ -111,13 +109,12 @@ export const useUser = () => {
     }
   };
 
-  // Get followers
+  
   const fetchFollowers = async (userId: string) => {
     setIsLoading(true);
     setError(null);
     try {
       const response = await userApi.getFollowers(userId);
-      console.log(response);
       
       const followersList = response.data.data
       setFollowers(followersList);
@@ -131,7 +128,7 @@ export const useUser = () => {
     }
   };
 
-  // Get following
+  
   const fetchFollowing = async (userId: string) => {
     setIsLoading(true);
     setError(null);
@@ -149,13 +146,13 @@ export const useUser = () => {
     }
   };
 
-  // Search users
+ 
   const searchUsers = async (query: string) => {
     if (!query.trim()) {
       setSearchResults([]);
       return { success: true, users: [] };
     }
-     console.log(query);
+  
      
     setIsLoading(true);
     setError(null);
@@ -194,7 +191,6 @@ export const useUser = () => {
   }
 
   return {
-    // State
     userProfile,
     followers,
     followings,
@@ -202,7 +198,7 @@ export const useUser = () => {
     isLoading,
     error,
 
-    // Actions
+    
     fetchUserProfile,
     fetchCurrentUser,
     updateProfile,
@@ -213,7 +209,6 @@ export const useUser = () => {
     searchUsers,
     uploadProfilePicture,
 
-    // Setters
     clearError: () => setError(null),
   };
 };

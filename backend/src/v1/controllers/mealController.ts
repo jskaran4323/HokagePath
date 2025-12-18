@@ -60,7 +60,7 @@ export const createMeal = async (req: AuthRequest, res: Response): Promise<void>
  */
 export const getMeal = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    console.log(req.body);
+    
     
     const userId = req.user!.id;
     const mealId = req.params.id;

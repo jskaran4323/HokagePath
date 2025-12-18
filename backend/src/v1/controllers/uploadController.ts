@@ -16,7 +16,7 @@ export const uploadProfilePicture = async (req: AuthRequest, res: Response): Pro
   try {
     const userId = req.user!.id;
     const file = req.file as Express.MulterS3.File;
-    console.log(file);
+    
     
     if (!file) {
       res.status(400).json({

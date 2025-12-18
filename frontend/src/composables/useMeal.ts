@@ -10,7 +10,7 @@ export const useMeals = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Generate AI meal
+  
   const generateMeal = async (data: GenerateMealRequest) => {
     setIsLoading(true);
     setError(null);
@@ -28,7 +28,6 @@ export const useMeals = () => {
     }
   };
 
-  // Create manual meal
   const createMeal = async (data: CreateMealRequest) => {
     setIsLoading(true);
     setError(null);
@@ -46,7 +45,7 @@ export const useMeals = () => {
     }
   };
 
-  // Get all meals
+
   const fetchMeals = async (mealType?: string) => {
     setIsLoading(true);
     setError(null);
@@ -66,7 +65,6 @@ export const useMeals = () => {
     }
   };
 
-  // Get single meal
   const fetchMeal = async (id: string) => {
     setIsLoading(true);
     setError(null);
@@ -84,7 +82,7 @@ export const useMeals = () => {
     }
   };
 
-  // Update meal
+ 
   const updateMeal = async (id: string, data: Partial<Meal>) => {
     setIsLoading(true);
     setError(null);
@@ -102,7 +100,6 @@ export const useMeals = () => {
     }
   };
 
-  // Delete meal
   const deleteMeal = async (id: string) => {
     setIsLoading(true);
     setError(null);
@@ -119,7 +116,7 @@ export const useMeals = () => {
     }
   };
 
-  // Get daily nutrition
+  
   const fetchDailyNutrition = async (date?: string) => {
     setIsLoading(true);
     setError(null);
@@ -137,13 +134,13 @@ export const useMeals = () => {
   };
 
   return {
-    // State
+   
     meals,
     currentMeal,
     isLoading,
     error,
 
-    // Actions
+    
     generateMeal,
     createMeal,
     fetchMeals,
@@ -152,7 +149,7 @@ export const useMeals = () => {
     deleteMeal,
     fetchDailyNutrition,
     
-    // Setters
+   
     setCurrentMeal,
     clearError: () => setError(null),
   };

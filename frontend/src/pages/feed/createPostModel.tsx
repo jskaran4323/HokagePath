@@ -43,7 +43,7 @@ const CreatePostModal = ({ isOpen, onClose, onSuccess }: CreatePostModalProps) =
     try {
       // 1️⃣ Upload images first
       const uploadedUrls = await handleUpload();
-      console.log("uploaded images", uploadedUrls);
+  
       if (uploadedUrls===null){
         return 
       }
@@ -55,7 +55,7 @@ const CreatePostModal = ({ isOpen, onClose, onSuccess }: CreatePostModalProps) =
         location: formData.location,
         visibility: formData.visibility,
       };
-      console.log("post request",postRequest);
+
       
       // 3️⃣ Send post request
       const result = await createPost(postRequest); // send JSON, not FormData
@@ -89,7 +89,7 @@ const CreatePostModal = ({ isOpen, onClose, onSuccess }: CreatePostModalProps) =
   
     try {
       const result = await uploadPostPictures(files); 
-      console.log(result);
+    
       
        return result ;
     } catch (err) {

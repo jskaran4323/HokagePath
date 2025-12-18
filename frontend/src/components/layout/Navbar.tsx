@@ -17,7 +17,6 @@ const Navbar = () => {
     e.preventDefault();
     if (!query.trim()) return;
     navigate(`/search?q=${encodeURIComponent(query)}`)
-    // searchUsers(query);
     setQuery('');
   };
 

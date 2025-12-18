@@ -9,7 +9,7 @@ export const useAuth = () => {
   const navigate = useNavigate();
   const {user, fitnessProfile, workoutStats, isAuthenticated, error, setUser, setIsAuthenticated, isLoading, reset, setHasFetched, setError, setLoading, hasFetched ,setProfile, setWorkoutStats} = useAuthStore();
 
-  // Login function
+ 
   const login = async (email: string, password: string) => {
     reset();
     setLoading(true);
@@ -62,7 +62,6 @@ export const useAuth = () => {
     }
   };
 
-  // Logout function
   const logout = async () => {
     setLoading(true);
 
@@ -109,7 +108,7 @@ export const useAuth = () => {
   
   
   return {
-    // State
+  
     user: user,
     fitnessProfile: fitnessProfile,
     workoutStats: workoutStats,
@@ -117,7 +116,7 @@ export const useAuth = () => {
     isLoading: isLoading,
     error: error,
 
-    // Functions
+    
     login,
     register,
     logout,

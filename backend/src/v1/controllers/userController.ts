@@ -106,8 +106,7 @@ export const updateProfile = async (req: AuthRequest, res: Response): Promise<vo
           const currentUserId = req.user?.id;
       
           const profile = await userService.getUserPublicProfile(targetUserId, currentUserId);
-          console.log(profile);
-          
+          (profile);  
           res.status(200).json({
             success: true,
             data: profile

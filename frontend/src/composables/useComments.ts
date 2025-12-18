@@ -10,14 +10,14 @@ export const useComments = (postId: string) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch comments - WRAPPED IN useCallback
+
   const fetchComments = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
       const response = await feedApi.getComments(postId);
       const commentsData = response.data.data 
-      console.log(commentsData);
+    
       
       setComments(commentsData);
       return { success: true, comments: commentsData };
@@ -28,9 +28,8 @@ export const useComments = (postId: string) => {
     } finally {
       setIsLoading(false);
     }
-  }, [postId]); // Only recreate when postId changes
+  }, [postId]);
 
-  // Create comment - WRAPPED IN useCallback
   const createComment = useCallback(async (data: CreateCommentRequest) => {
     setIsLoading(true);
     setError(null);
@@ -39,10 +38,10 @@ export const useComments = (postId: string) => {
       const comment = response.data.data || response.data.comment || response.data;
       
       if (data.parentCommentId) {
-        // Add as reply
+     
         setComments(prev => addReplyToComment(prev, data.parentCommentId!, comment));
       } else {
-        // Add as top-level comment
+      
         setComments(prev => [comment, ...prev]);
       }
       
@@ -56,12 +55,12 @@ export const useComments = (postId: string) => {
     }
   }, [postId]);
 
-  // Delete comment - WRAPPED IN useCallback + FIXED API CALL
+
   const deleteComment = useCallback(async (commentId: string) => {
     setIsLoading(true);
     setError(null);
     try {
-      await feedApi.deleteComment(commentId); // ✅ FIXED: Pass commentId, not postId
+      await feedApi.deleteComment(commentId);
       setComments(prev => removeCommentById(prev, commentId));
       return { success: true };
     } catch (err: any) {
@@ -71,9 +70,9 @@ export const useComments = (postId: string) => {
     } finally {
       setIsLoading(false);
     }
-  }, []); // No dependencies needed
+  }, []); 
 
-  // Helper: Add reply to nested comment
+
   const addReplyToComment = (comments: Comment[], parentId: string, reply: Comment): Comment[] => {
     return comments.map(comment => {
       if (comment.id === parentId) {
@@ -92,7 +91,7 @@ export const useComments = (postId: string) => {
     });
   };
 
-  // Helper: Remove comment by ID
+ 
   const removeCommentById = (comments: Comment[], commentId: string): Comment[] => {
     return comments
       .filter(comment => comment.id !== commentId)
@@ -102,21 +101,21 @@ export const useComments = (postId: string) => {
       }));
   };
 
-  // Clear error - WRAPPED IN useCallback
+
   const clearError = useCallback(() => setError(null), []);
 
   return {
-    // State
+   
     comments,
     isLoading,
     error,
 
-    // Actions
+   
     fetchComments,
     createComment,
     deleteComment,
 
-    // Setters
+  
     clearError,
   };
 };
