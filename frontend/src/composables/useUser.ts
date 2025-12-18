@@ -155,12 +155,13 @@ export const useUser = () => {
       setSearchResults([]);
       return { success: true, users: [] };
     }
-
+     console.log(query);
+     
     setIsLoading(true);
     setError(null);
     try {
       const response = await userApi.searchUsers(query);
-      const users = response.data.data?.users || response.data.users || [];
+      const users = response.data.data;
       setSearchResults(users);
       return { success: true, users };
     } catch (err: any) {

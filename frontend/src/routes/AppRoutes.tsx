@@ -16,6 +16,7 @@ import FeedPage from '../pages/feed/FeedPage';
 import UserProfilePage from '../pages/Profile/UserProfilePage';
 import NotFoundPage from './NotfoundPage';
 import WorkoutSession from '../pages/workout/workoutSession';
+import SearchPage from '../pages/searchPage/searchPage';
 
 const AppRoutes = () => {
   return (
@@ -147,7 +148,7 @@ const AppRoutes = () => {
         }
       />
 
-<Route
+     <Route
         path="/workout/:id"
         element={
           <ProtectedRoute>
@@ -157,6 +158,19 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
+      
+      <Route
+        path="/search"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <SearchPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+
 
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
 

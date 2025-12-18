@@ -167,6 +167,8 @@ export class UserService{
                 {fullname: {$regex: query, $options: 'i'}}
             ]
         }).limit(20)
+        console.log(users);
+        
         return users.map(user => ({
             id: user._id.toString(),
             username: user.username,
