@@ -1,10 +1,14 @@
 // src/server.ts
 import dotenv from 'dotenv';
-dotenv.config();
+import path from 'path';
+dotenv.config({ path: path.resolve(__dirname, '../.env.dev') });
+
 
 import mongoose from 'mongoose';
 import app from './app';
 import pino from 'pino';
+
+
 
 const PORT = parseInt(process.env.PORT || '4000', 10);
 
