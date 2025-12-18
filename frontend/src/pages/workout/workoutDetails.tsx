@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// frontend/src/pages/Workouts/WorkoutDetail.tsx
 
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -10,10 +8,9 @@ const WorkoutDetail = () => {
   const navigate = useNavigate();
   const [workout, setWorkout] = useState<Workout | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isStarting, setIsStarting] = useState(false);
-  const [isCompleting, setIsCompleting] = useState(false);
-  
-  // For completion form
+  const [isStarting] = useState(false);
+  const [isCompleting] = useState(false);
+ 
   const [completionData, setCompletionData] = useState({
     caloriesBurned: 0,
     userRating: 5,
