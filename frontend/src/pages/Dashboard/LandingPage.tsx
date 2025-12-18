@@ -63,7 +63,7 @@ const HokagePathLanding = () => {
           {/* Animated Badge */}
           <div className="inline-block mb-6 px-4 py-2 bg-white bg-opacity-20 backdrop-blur-sm rounded-full border border-white border-opacity-30">
             <span className="text-white text-sm font-semibold tracking-wider">
-              🔥 YOUR JOURNEY AWAITS
+              YOUR JOURNEY AWAITS
             </span>
           </div>
 
