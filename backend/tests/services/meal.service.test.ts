@@ -103,6 +103,7 @@ describe("MealService test", () => {
     expect(result.id).toBe(mealId.toString());
     expect(result.userId).toBe(userId);
     expect(result.title).toBe("Mock Meal");
+    expect(result.description).toBe("A simple mock meal")
     
   });
 });
