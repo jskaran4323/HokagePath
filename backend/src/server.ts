@@ -1,7 +1,13 @@
 // src/server.ts
+
+if (process.env.NODE_ENV !== 'production') {
+  // local dev only
+  require('dotenv').config({ path: '.env.dev' })
+}
+
 import dotenv from 'dotenv';
 import path from 'path';
-dotenv.config({ path: path.resolve(__dirname, '../.env.dev') });
+// dotenv.config({ path: path.resolve(__dirname, '../.env.dev') });
 
 
 import mongoose from 'mongoose';
