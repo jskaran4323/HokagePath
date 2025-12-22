@@ -16,7 +16,8 @@ export class PostService {
 
   private async toPostResponse(post: any, currentUserId?: string): Promise<PostResponseDTO> {
     const author = await UserModel.findById(post.author);
-    
+   
+   
     return {
       id: post._id.toString(),
       author: {
@@ -64,7 +65,11 @@ export class PostService {
   }
 
   async getFeed(userId: string, page: number = 1, limit: number = 20): Promise<PostResponseDTO[]> {
+    
+    console.log("i was called");
+    
     const user = await UserModel.findById(userId);
+    
     if (!user) throw new PostServiceError('User not found', 404);
 
     const followingIds = user.following;
@@ -76,12 +81,21 @@ export class PostService {
         { visibility: 'public' }
       ],
       isVisible: true
-    })
+    }).populate('author')  
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit);
 
-    return Promise.all(posts.map(post => this.toPostResponse(post, userId)));
+      console.log(posts);
+      
+
+      const responses = await Promise.all(
+        posts.map(post => this.toPostResponse(post, userId))
+      );
+    
+      return responses.filter(
+        (post): post is PostResponseDTO => post !== null
+      );
   }
 
   async getUserPosts(targetUserId: string, currentUserId?: string): Promise<PostResponseDTO[]> {

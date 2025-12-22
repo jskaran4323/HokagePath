@@ -1,15 +1,7 @@
-// src/server.ts
 
 if (process.env.NODE_ENV !== 'production') {
-  // local dev only
   require('dotenv').config({ path: '.env.dev' })
 }
-
-import dotenv from 'dotenv';
-import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '../.env.dev') });
-
-
 import mongoose from 'mongoose';
 import app from './app';
 import pino from 'pino';
@@ -18,14 +10,18 @@ import pino from 'pino';
 
 const PORT = parseInt(process.env.PORT || '4000', 10);
 
-const MONGODB_URI = process.env.MONGODB_URI || '';
+const MONGODB_URI = "mongodb+srv://jaskaran4323_db_user:3glAK24LLeyjZLTr@HokagePath.ffpy4eh.mongodb.net/?appName=HokagePath";
 const logger = pino({ level: 'info' });
+
+
+
 
 const startServer = async (): Promise<void> => {
   try {
     await mongoose.connect(MONGODB_URI);
-    logger.info('✅ Connected to MongoDB');
-
+    
+    logger.info('✅ Connected to MongoDB: ' + MONGODB_URI);
+     
     app.listen(PORT, '0.0.0.0', () => {
       logger.info(`🚀 Server running on http://0.0.0.0:${PORT}`);
     });

@@ -19,9 +19,6 @@ export const useAuth = () => {
       setUser(response.data.data.user);
       setIsAuthenticated(true)
       
-      
-      
-     
       navigate('/feed');
       return { success: true };
     } catch (err: any) {

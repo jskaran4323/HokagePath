@@ -176,9 +176,9 @@ const AppRoutes = () => {
         }
       />
       <Route 
-  path="/" 
-  element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LandingPage />} 
-/>
+      path="/" 
+      element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LandingPage />} 
+      />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

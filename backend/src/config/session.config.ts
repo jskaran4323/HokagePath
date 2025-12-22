@@ -2,6 +2,7 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 
 const isProduction = process.env.NODE_ENV === 'production';
+console.log(isProduction);
 
 export const sessionConfig: session.SessionOptions = {
   secret: process.env.SESSION_SECRET || '',
