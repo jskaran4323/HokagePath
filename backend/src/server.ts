@@ -10,20 +10,17 @@ import pino from 'pino';
 
 const PORT = parseInt(process.env.PORT || '4000', 10);
 
-const MONGODB_URI = "mongodb+srv://jaskaran4323_db_user:3glAK24LLeyjZLTr@HokagePath.ffpy4eh.mongodb.net/?appName=HokagePath";
+const MONGODB_URI = process.env.MONGODB_URI || "" ;
 const logger = pino({ level: 'info' });
-
-
-
 
 const startServer = async (): Promise<void> => {
   try {
     await mongoose.connect(MONGODB_URI);
     
-    logger.info('✅ Connected to MongoDB: ' + MONGODB_URI);
+    logger.info(' Connected to MongoDB: ' + MONGODB_URI);
      
     app.listen(PORT, '0.0.0.0', () => {
-      logger.info(`🚀 Server running on http://0.0.0.0:${PORT}`);
+      logger.info(`Server running on http://0.0.0.0:${PORT}`);
     });
     
   } catch (error) {
